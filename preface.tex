@@ -1,4 +1,5 @@
 \chapter*{\centerline{\bf \Large\MakeUppercase{Lời mở đầu}}}
+\addcontentsline{toc}{chapter}{Lời mở đầu}
 
 Điện toán đám mây\footnote{Cloud Computing: \url{https://en.wikipedia.org/wiki/Cloud_computing}} không còn là một khái niệm mới ở Việt Nam cũng như trên thế giới. Mặc dù điện toán đám mây chỉ là một cách khác để cung cấp các tài nguyên máy tính, chứ không phải là một công nghệ mới, nhưng nó đã châm ngòi một cuộc cách mạng trong cách cung cấp thông tin và dịch vụ của các doanh nghiệp - tổ chức trên toàn thế giới.
 
@@ -10,6 +11,13 @@ Các automation framework tiêu biểu được đề cập trong đồ án này
 
 Trong nội dung của đồ án này, em tập trung tìm hiểu cách sử dụng các automation framework và sau đó là ứng dụng chúng để tự động hóa các công việc liên quan đến hệ thống hạ tầng các sản phẩm công nghệ.
 
-Hạ tầng sản phẩm công nghệ ở đây bao gồm: hạ tầng máy chủ (Linux) cùng các cấu hình; các dịch vụ hệ thống như NTP, SSH, Cron, DHCP, DNS, .v.v.; các dịch vụ và ứng dụng phục vụ trực tiếp cho sản phẩm như webserver (apache, nginx), database (postgresql, mysql) .v.v.
+Hạ tầng sản phẩm công nghệ ở đây bao gồm:
+\begin{itemize}
+\item Hạ tầng máy chủ (Linux) cùng các cấu hình; các dịch vụ hệ thống như NTP, SSH, Cron, DHCP, DNS, .v.v.
+\item Các dịch vụ và ứng dụng phục vụ trực tiếp cho sản phẩm như webserver (apache, nginx), database (postgresql, mysql) .v.v.
+\end{itemize}
+
+Việc phân chia 2 tầng như trên chỉ mang tính chất tương đối để chúng ta có thể xác định cụ thể quyền hạn và trách nhiệm của 2 dạng công cụ sẽ được đề cập đến trong đồ án là công cụ triển khai sản phẩm (deployment tool) và công cụ quản lý cấu hình (configuration manager).
+
 
 \thispagestyle{empty}
