@@ -1,0 +1,82 @@
+\documentclass[14pt,a4paper,oneside,fleqn,openright]{extbook}
+\renewcommand{\baselinestretch}{1.50}\normalsize
+\usepackage[top=3.5cm, bottom=3cm, left=3.5cm, right=2cm]{geometry}
+
+\usepackage[utf8]{vietnam}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{datetime}
+\usepackage{url}
+\usepackage[nottoc,notbib]{tocbibind}
+
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+%%% Header %%%
+\fancyhead{}
+\fancyhead[L]{\ifthenelse{\isodd{\value{page}}}{\it \nouppercase{\leftmark}}{\it \nouppercase{\rightmark}}}
+\fancyhead[R]{\thepage}
+%%% Footer %%%
+\fancyfoot{}
+\fancyfoot[L]{\ifthenelse{\isodd{\value{page}}}{\it Sinh viên: Dương Tiến Thuận - 50TH2\hfill \thepage}{\it Đồ án: Tiếp cận System Automation cho hạ tầng sản phẩm công nghệ\hfill \thepage}}
+
+\usepackage[style]{fncychap}
+\ChNameUpperCase 
+\ChNameVar{\raggedright \bfseries\normalsize}
+\ChRuleWidth{1pt}
+\ChTitleUpperCase 
+\ChNumVar{\raggedright\bfseries\normalsize}
+\ChTitleVar{\raggedright\bfseries\Large}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks        = true,
+  bookmarksnumbered = true,
+  allcolors         = blue, 
+  pdfauthor         = {Duong Tien Thuan - 50TH2 - 0851061294},
+  pdftitle          = {TIEP CAN SYSTEM AUTOMATION CHO HA TANG SAN PHAM CONG NGHE},
+  pdfsubject        = {ĐO AN TOT NGHIEP - CSE - WRU},
+  pdfcreator        = {Thuan Duong <thuandt26@gmail.com>},
+  pdfproducer       = {pdflatex},
+  unicode           = true,
+  pdffitwindow       = true,
+}
+
+\begin{document}
+
+\author{Dương Tiến Thuận}
+\title{Tiếp cận System Automation cho hạ tầng sản phẩm công nghệ}
+
+\frontmatter
+\pagestyle{empty}
+\input{thanks}
+
+\newpage
+\input{preface}
+
+\renewcommand{\baselinestretch}{1}\normalsize
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\renewcommand{\baselinestretch}{1.50}\normalsize
+\mainmatter
+\pagestyle{fancy}
+\newpage
+\input{theory}
+
+\newpage
+\input{framework}
+
+\newpage
+\input{labs}
+
+\backmatter
+\pagestyle{empty}
+\input{conclusions}
+
+\newpage
+\input{references}
+
+\end{document}
