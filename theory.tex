@@ -1,7 +1,8 @@
 \chapter{Tổng quan về tự động hóa hệ thống}
-
+\newpage
+\clearpage
 \section{Lý do cần tự động hóa hệ thống}
-Có thể bạn chưa biết, công việc của quản trị hệ thống thường xoay quanh một loạt các nhiệm vụ lặp đi lặp lại: cấu hình máy chủ, tạo người dùng, quản lý ứng dụng, dịch vụ và các chương trình chạy nền khác. Những công việc này thường được lặp đi lặp lại nhiều lần trong vòng đời của một máy chủ, từ lúc xây dựng hệ thống đến khi ngừng hoạt động. Nó bao gồm cả những việc như quản lý cấu hình trên nhiều cụm máy chủ khác nhau, đồng bộ hóa cấu hình giữa chúng theo chức năng; triển khai backend cho các sản phẩm; triển khai các sản phẩm trên các cụm máy chủ dịch vụ; dọn rác khi đĩa đầy, xóa log không dùng đến, xóa cache ... và đôi lúc là dọn "rác" của những người tiền nhiệm.
+Không phải ai cũng biết rằng, công việc của quản trị hệ thống thường xoay quanh một loạt các nhiệm vụ lặp đi lặp lại: cấu hình máy chủ, tạo người dùng, quản lý ứng dụng, dịch vụ và các chương trình chạy nền khác. Những công việc này thường được lặp đi lặp lại nhiều lần trong vòng đời của một máy chủ, từ lúc xây dựng hệ thống đến khi ngừng hoạt động. Nó bao gồm cả những việc như quản lý cấu hình trên nhiều cụm máy chủ khác nhau, đồng bộ hóa cấu hình giữa chúng theo chức năng; triển khai backend cho các sản phẩm; triển khai các sản phẩm trên các cụm máy chủ dịch vụ; dọn rác khi đĩa đầy, xóa log không dùng đến, xóa cache ... và đôi lúc là dọn "rác" của những người tiền nhiệm.
 
 \newpage
 \section{Các vấn đề nảy sinh}
@@ -24,7 +25,7 @@ Một người quản trị hệ thống cho dù giỏi đến đâu cũng có s
 
 \item \textbf{Chấp nhận sống trong "vũng lầy"}. 
 
-Một điều đáng ngạc nhiên là có rất nhiều công ty, tập đoàn từ công nghệ đến cả tài chính trên thế giới phải làm kiểu này. Hệ thống vẫn hoạt động được và vẫn kiếm ra của cải, không có lý do gì phải thay đổi cả. Cho dù hệ thống từ góc nhìn của người quản trị chỉ là một "vũng lầy"
+Một điều đáng ngạc nhiên là có rất nhiều công ty, tập đoàn từ công nghệ đến cả tài chính trên thế giới phải làm kiểu này. Hệ thống vẫn hoạt động được và vẫn kiếm ra của cải, rất khó để có thể đưa một thay đổi đáng kể nào vào hệ thống đó. Người ta lúc này buộc lòng phải chấp nhận sống trong "vũng lầy"
 
 \item \textbf{Tự động hóa hệ thống}
 
