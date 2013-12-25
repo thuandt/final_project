@@ -1,9 +1,9 @@
 \section{Chef}
 
-\subsection{Tổng quan về Chef}
+\subsection{Tổng quan}
 Chef là một framework cho việc tự động hóa hệ thống và cơ sở hạ tầng điện của toán đám mây. Chef được dùng để triển khai các máy chủ hoặc các ứng dụng tới bất kỳ đâu: từ máy chủ vật lý tới máy chủ ảo hay máy chủ trên hệ thống điện toán đám mây, mà không bao giờ phải bận tâm về kích thước của cơ sở hạ tầng. Chef-client dựa trên các định nghĩa trừu tượng (được gọi là cookbooks và recipes) được viết bằng Ruby và được quản lý như mã nguồn. Mỗi định nghĩa mô tả cách một phần cụ thể của cơ sở hạ tầng nên được xây dựng hoặc quản lý. Chef-client sau đó áp dụng những định nghĩa này cho các máy chủ và các ứng dụng, theo quy định, dẫn đến một cơ sở hạ tầng hoàn toàn tự động. Khi một node mới được đưa vào hệ thống, điều duy nhất mà chef-client cần biết là có những cookbooks và recipes nào cần phải được áp dụng.
 
-\subsection{Kiến trúc của Chef}
+\subsection{Kiến trúc hệ thống}
 
 Sơ đồ dưới đây cho thấy mối quan hệ giữa các yếu tố khác nhau của Chef, bao gồm các nút, máy chủ, và các máy trạm. Những yếu tố này làm việc cùng nhau để cung cấp các chef-client các thông tin và hướng dẫn giúp nó thực hiện các công việc của mình.
 
@@ -28,7 +28,7 @@ Chef bao gồm ba yếu tố chính : một máy chủ trung tâm, một hay nhi
 
 Cookbook là một yếu tố rất quan trọng và có thể coi là một thành phần riêng biệt (cùng với máy chủ, máy trạm và các nút). Nhìn chung, cookbook được viết ra và quản lý bởi các máy trạm, sau đó được chuyển lên server; từ server chúng được đẩy xuống các nút bằng chef-client trong mỗi lần chef-client thực thi.
 
-\subsection{Các thành phần của Chef}
+\subsection{Các thành phần chính}
 Phần dưới đây sẽ cho chúng ta biết chi tiết hơn về các thành phần đã kể trên
 
 \textbf{\large Các nút}

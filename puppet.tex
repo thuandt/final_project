@@ -1,7 +1,7 @@
 \section{Puppet}
 Puppet là một framework mã nguồn mở và là công cụ để quản lý cấu hình của hệ thống máy tính. Trong phần này, chúng ta sẽ tìm hiểu tổng quan về Puppet: cách thức nó hoạt động, cách nó quản lý cấu hình của hệ thống máy chủ, lý do puppet có thể chạy trên nhiều nền tảng khác nhau. Tiếp đó, chúng ta sẽ tìm hiểu kiến trúc của Puppet, cách Puppet thu thập và quản lý các gói dữ liệu cấu hình.
 
-\subsection{Tổng quan về Puppet}
+\subsection{Tổng quan}
 Puppet là một công cụ quản lý cấu hình mã nguồn mở viết bằng Ruby, được sử dụng để quản lý cấu hình máy chủ và tự động hóa hệ thống trong các trung tâm dữ liệu của Google, Twitter, thị trường chứng khoán New York, và nhiều doanh nghiệp lớn khác. Puppet được phát triển đầu tiên bởi Puppet Labs, và hiện tại Puppet Labs cũng là người duy trì chính của dự án này. Puppet được dùng để quản lý có khi chỉ vài máy chủ nhưng cũng có khi lên tới 50.000 máy chủ, cùng với đó là đội quản trị hệ thống từ một người tới hàng trăm người.
 
 Puppet là một công cụ để quản lý cấu hình và bảo trì hệ thống máy tính; ngôn ngữ cấu hình của nó rất đơn giản. Chúng ta chỉ cần chỉ cho Puppet thấy chúng ta muốn cấu hình máy tính của chúng ta như thế nào, nó sẽ thực hiện đúng những gì chúng ta muốn. Khi hệ thống có sự thay đổi chẳng hạn như một phiên bản cập nhật của gói phần mềm, thêm người dùng mới hay một cấu hình nào đó thay đổi, Puppet tự động cập nhật tất cả các máy chủ trong hệ thống đúng như cấu hình chúng ta muốn.
@@ -16,7 +16,7 @@ Puppet là một công cụ để quản lý cấu hình và bảo trì hệ th�
 
 Như hình vẽ trên, Puppet đảm bảo rằng gói phần mềm \textbf{\textit{ssh}} được cài đặt và file cấu hình dịch vụ SSH \footnote{Secure Shell: \url{https://en.wikipedia.org/wiki/Secure_Shell}} \textbf{\textit{/etc/ssh/sshd\_config}} của tất cả các máy chủ trong hệ thống mà Puppet quản lý đều có cùng nội dung mới file đã định trước; thêm vào đó, Puppet đảm bảo việc dịch vụ này luôn được chạy giúp người quản trị hệ thống có thể can thiệp thủ công khi cần thiết.
 
-\subsection{Kiến trúc của Puppet}
+\subsection{Kiến trúc hệ thống}
 
 Puppet được xây dựng với hai chế độ làm việc:
 
@@ -102,7 +102,7 @@ Ngoài Facts, Manifests, Catalogs, and Reports, Puppet còn hỗ trợ các ki�
 \end{figure}
 
 \clearpage
-\subsection{Các thành phần của Puppet}
+\subsection{Các thành phần chính}
 Các thành phần chính của Puppet bao gồm: Agent, Facter, ENC, Compiler, Transaction, RAL và Reporting
 
 
@@ -162,7 +162,7 @@ Các sự kiện được bao bọc trong một đối tượng ResourceStatus �
 Sau khi giao dịch hoàn tất, một số số liệu cơ bản được tính toán và lưu trữ trong báo cáo, và sau đó nó được gửi đến máy chủ trung tâm (nếu cấu hình). Với báo cáo đã gửi, quá trình cấu hình hoàn tất, các agent sẽ quay về trạng thái nghỉ hoặc là tự động kết thúc.
 
 
-\subsection{Hệ thống hạ tầng của Puppet}
+\subsection{Kiến trúc hạ tầng}
 
 Trong mục này chúng ta sẽ tìm hiểu các thành phần hạ tầng của Puppet
 
