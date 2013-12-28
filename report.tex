@@ -6,9 +6,29 @@
 \usepackage{times}
 \usepackage{graphicx}
 \usepackage{datetime}
+
+\usepackage{courier}
 \usepackage{listings}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  breaklines=true,
+  frame=single,
+  tabsize=2,
+  showspaces=false,
+  showtabs=false,
+  tabsize=2,
+  captionpos=b,
+  columns=flexible
+}
+\renewcommand\lstlistingname{Mã nguồn}
+\renewcommand\lstlistlistingname{Danh sách mã nguồn}
+\def\lstlistingautorefname{Mã nguồn .}
+
 \usepackage[nottoc,notbib]{tocbibind}
 \usepackage[justification=centering]{caption}
+
+\usepackage{lscape}
+\usepackage{longtable}
 
 \usepackage{fancyhdr}
 \renewcommand{\headrulewidth}{0.5pt}
@@ -57,9 +77,12 @@
 
 \renewcommand{\baselinestretch}{1}\normalsize
 
+%\setcounter{tocdepth}{4}
 \tableofcontents
 \listoffigures
 \listoftables
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Danh sách mã nguồn}
 
 \renewcommand{\baselinestretch}{1.50}\normalsize
 \mainmatter
