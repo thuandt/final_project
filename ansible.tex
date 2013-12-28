@@ -1,7 +1,6 @@
 \section{Ansible}
 Ansible là một giải pháp đơn giản được sử dụng trong việc tự động hóa hàng loạt các công việc liên quan đến hạ tầng CNTT như tự động cấu hình, tự động triển khai phần mềm, và nhiều công việc khác nữa. Trong mô hình của Ansible, hạ tầng CNTT của bạn được nhìn góc độ là một kiến trúc tổng thể của các thành phần có liên quan thay vì chỉ quản lý một hệ thống tại một điểm riêng lẻ. Nó không sử dụng các agent hoặc thêm vào các lớp tùy chọn bảo mật bổ sung, do đó việc triển khai Ansible vô cùng đơn giản. Một điều quan trọng nữa đó là ngôn ngữ cấu hình mà nó sử dụng rất đơn giản (được gọi là playbooks), nó cho phép mô tả những công việc tự động bằng tiếng Anh đơn thuần thay vì viết một điều gì đó phức tạp bằng một ngôn ngữ lập trình nào đó. Bằng cách sử dụng Ansible, chúng ta sẽ thực hiện việc tự động hóa hàng loạt nhanh hơn, thậm chí nó có thể đạt tới những điều mà ta chưa từng thấy trước đó.
 
-
 \subsection{Tổng quan}
 
 Ansible là một phần mềm mã nguồn mở dùng trong việc quản lý cấu hình của hạ tầng CNTT, triển khai sản phẩm công nghệ, cùng như điều phối các hoạt động tự động hóa khác. Với chỉ một công cụ duy nhất, nó đem lại những hiệu quả lớn trước hàng loạt các thách thức về tự động hóa. Ansible cung cấp sự thay thế hiệu các chức năng cốt lỗi vốn có trong các giải pháp tự động hóa khác, đồng thời tìm kiếm lời giải cho những vấn đề chưa được giải quyết. Bao gồm sự phối hợp rõ ràng về các quy trình làm việc phức tạp và sự thống nhất về cấu hình của hệ điều hành và phần mềm ứng dụng triển khai.
@@ -66,4 +65,122 @@ Với các phương pháp truyền thống khác, người dùng thường phả
 
 Ansible đã gộp tất cả các yếu tó đó thành một công cụ duy nhất, đồng thời cung cấp các khả năng và đặc điểm cho phép thực hiện triển khai những phần mềm nhiều lớp và các quy trình làm việc phức tạp.
 
+\subsection{Mô hình sắp xếp công việc}
+
+Để có thể hiểu được mô hình sắp xếp công việc (Modeling Orchestration Workflows) của Ansible, chúng ta lấy xem xét một ví dụ cụ thể về một ứng dụng web 3 lớp truyền thống bao gồm các thành phần:
+
+\begin{itemize}
+\item Các máy chủ ứng dụng
+\item Các máy chủ cơ sở dữ liệu
+\item Các máy chủ nội dung
+\item Hệ thống cân bằng tải
+\item Hệ thống giám sát được kết nối với hệ thống cảnh báo như một dịch vụ thông báo
+\item Một hệ thống tích hợp liên tục\footnote{Continuous integration: \url{https://en.wikipedia.org/wiki/Continuous_integration}}
+\end{itemize}
+
+Theo như ví dụ trên, Ansible có thể xử lý một cách đơn giản theo mô hình như sau:
+
+\begin{enumerate}
+\item Tư vấn cách cấu hình và cài đặt kho chứa cho thông tin về các máy chủ tham gia.
+\item Cấu hình hệ điều hành cơ sở trên tất cả các máy và thực hiện các công việc sao cho tất cả chúng có cùng một trạng thái mong muốn.
+\item Xác định thành phần của các máy chủ ứng dụng web để cập nhật.
+\item Đưa ra tín hiệu báo cho hệ thống giám sát chuyển các servers vào trạng thái offline.
+\item Đưa ra tín hiệu báo cho hệ thống cân bằng tải tách các máy chủ ứng dụng ra khỏi hệ thống
+\item Triển khai và cập nhật các máy chủ ứng dụng web
+\item Đưa ra tín hiệu báo cho hệ thống cân bằng tải đưa các máy chủ ứng dụng này trở lại hệ thống.
+\item Đưa ra tín hiệu báo cho hệ thống giám sát tiếp tục giám sát các sự cố trên các máy chủ này.
+\item Lặp đi lặp lại quá trình này cho tới khi tất cả các máy chủ ứng dụng còn lại được cập nhật.
+\item Lặp lại các quá trình cập nhật lần lượt này cho các lớp khác như máy chủ cơ sở dữ liệu hay máy chủ nội dung.
+\item Gửi thư điện thử thông báo và giải trình khi quá trình cập nhật hoàn thành.
+\end{enumerate}
+
 \subsection{Các thành phần chính}
+
+\textbf{\large Modules}
+\addcontentsline{toc}{paragraph}{Modules}
+
+
+Các module của Ansible là nguồn tài nguyên được phân phối cho các nút ở xa để yêu cầu chúng thực hiện một số nhiệm vụ hoặc đưa nút đó một vào một trạng thái thích hợp theo yêu cầu. Ansbile luôn đi theo triết lý "batteries included", vì vậy chúng ta có rất nhiều module tuyệt vời dành cho hầu hết các công việc lõi của ngành CNTT. Điều này có nghĩa là những module này luôn được cập nhật và chúng ta không cần phải cố gắng tìm kiếm cách để cho nó làm việc trên nền tảng của chúng ta. Chúng ta có thể tưởng tượng những module này là các thành phần của một bộ công cụ hữu ích với các công cụ quản lý hệ thống và các playbooks như một hướng dẫn để xây dựng một hệ thống bằng những công cụ này.
+
+Với một số lượng khá lớn module, Ansible có khả năng dễ dàng triển khai những workloads tới một loạt các công nghệ ảo hóa và các dịch điện toán đám mây công cộng hay trên các môi trường tiền điện toán đám mây như VMware, OpenStack, Amazon Web Services EC2 (AWS), Eucalyptus Cloud, KVM, và CloudStack. Những máy chủ có thể được triển khai từ hình ảnh hệ điều hành cơ sở mà không có bất kỳ sửa đổi, đồng thời được cấu hình đầy đủ chỉ trong một bước.
+
+Không chỉ vậy, hiện nay Ansible được sử dụng rộng rãi trong việc triển khai các hệ thống BigData, các hệ thống lưu trữ và phân tích môi trường bao gồm những nền tảng quan trọng như Hadoop, Riak, và Aerospike.
+
+Trong những môi trường có nhiều máy chủ chưa được cấu hình nhưng chúng phải được cấu hình trước mà không cần bất kì một chương trình agent quản lý. Khách hàng yêu cầu một công cụ điều khiển đơn giản và dễ dàng chỉnh sửa các chính sách cho cả hai việc triển khai và cập nhật các cụm clusters.
+
+Các khu vực khác bên ngoài lĩnh vực BigData cũng có thể tận dụng lợi thế này. Các tính chất này cũng làm cho Ansible hấp dẫn cho hệ thống giám sát lưu lượng truy cập cao tổ chức, nơi Ansible trả lại tất cả tài nguyên CPU có sẵn cho các môi trường máy tính khi không sử dụng. Không có việc lãng phí tài nguyên bộ nhớ hoặc CPU, cũng không cần phải có một daemon để duy trì hoạt động.
+
+Để có thể tìm hiểu chi tiết hơn về chức năng của các module này trong Ansbile, chúng ta có thể tham khảo trang tài liệu của Ansbile Works. Tại địa chỉ \url{http://www.ansibleworks.com/docs/modules.html}
+
+\textbf{\large Plugins}
+\addcontentsline{toc}{paragraph}{Plugins}
+
+
+Có rất nhiều điểm tích hợp có thể được sử dụng để mở rộng Ansible, bao gồm:
+
+\begin{itemize}
+\item Những module có thể chạy cục bộ hoặc từ xa để cấu hình các ứng dụng, các dịch vụ hoặc các tham số cho hệ điều hành.
+\item Các phương thức mới ghi nhập các callback cho các chương trình kiểm soát hoặc báo cáo
+\item Tích hợp với các nguồn dữ liệu bên ngoài
+\item Các thông tin dữ liệu của Inventory từ hệ thống CMDB hoặc đám mây
+\item Các phương thức chuyển vận mới mà từ đó Ansbile có thể giao tiếp với các máy mà mình quản lý
+\end{itemize}
+
+Cac đơn vị công việc trong ansbile được đảm bảo bởi các module, đó là những chương trình nhỏ chạy trên máy chủ ở xa để đảm bảo rằng máy chủ đó được đưa vào trạng thái chỉ định phù hợp. Các module này có thể viết bằng ngôn ngữ bất kì chẳng hạn như Python, Perl, Ruby hay bash script. Vì vậy, người dùng có thể sử dụng công cụ yêu thích của họ để tạo ra các module cho bản thân mình hay những người khác.
+
+Mặc định, các module lõi đã được tạo sẵn, có nghĩa là chúng giúp hệ thống có được một trạng thái mong muốn, và nếu không có thay đổi trạng thái được thực hiện, chúng không làm gì ảnh hưởng tới hệ thống cả. Ansible cũng làm cho nó trở nên dễ dàng để mô hình hóa các quá trình được không tạo sẵn, và cũng làm cho nó có thể chỉ đơn giản là chỉ cần đẩy ra kịch bản đơn giản và chạy chúng như mong muốn. Sử dụng các module có sẵn là thích hơn, tuy nhiên, nhưng điều quan trọng là để có thể để mô hình bất kỳ loại quá trình nào chứ không chỉ một mà rơi vào những giới hạn của chúng. Ansible luôn thực tế trong vấn đề này.
+
+
+\textbf{\large Playbooks}
+\addcontentsline{toc}{paragraph}{Playbooks}
+
+
+Trong Ansible, mọi công việc từ cấu hình hệ điều hành cơ sở đến mô hình hóa quá trình cập nhật hay thực thi ngay lập tức các công việc trên một máy chủ ở xa đều sử dụng chung một công cụ. Những cấu hình cụ thể được viết ra trong Ansible được gọi là "Playbooks". Đó một dạng mã mà cả con người và máy tính đều có thể phân tích được (một dạng mã YAML\footnote{\url{http://www.ansibleworks.com/docs/YAMLSyntax.html}}), đồng thời làm cho việc hợp tác với những chương trình khác dễ dàng hơn. Và quan trọng nhất là dễ đọc và hiểu đối với cả những người không phải là nhà phát triển.
+
+Playbooks làm cho việc cấu hình hệ thống hay triển khai hệ thống trên nhiều máy trở lên đơn giản hơn bất kỳ công cụ nào đã có. Playbooks rất phù hợp trong việc triển khai các ứng dụng phức tạp.
+
+Playbooks có thể khai báo cấu hình, nhưng nó cũng có thể dàn xếp các bước bất kì của một quá trình thủ công, thậm chí là cả những bước khác nhau khi mà chúng phải nhảy qua nhảy lại giữa một tập hợp các máy chủ với các nhiệm vụ khác nhau. Playbooks có thể thực hiện các công việc một cách đồng bộ hoặc không đồng bộ.
+
+Trong khi bạn có thể chạy chính ansible cho các nhiệm vụ đột xuất, playbooks có thể được giữ trong các hệ thống kiểm soát mã nguồn và được sử dụng để đẩy đi các cấu hình hoặc đảm bảo cấu hình của hệ thống từ xa được giữ trong spec của nó.
+
+Playbooks được thể hiện trong định dạng YAML với cú pháp được tối thiểu hóa. Những nhà phát triển Ansible đã hết sức cố gắng để làm cho nó không giống một ngôn ngữ lập trình hay script mà là giống một dạng mô hình cấu hình hay một quá trình.
+
+Mỗi playbooks bao gồm một hay nhiều \textbf{play} trong danh sách
+
+Mục tiêu của mỗi play là ánh xạ một nhóm các máy chủ với một số vai trò xác định, đại điện cho những điều mà Ansible gọi là nhiệm vụ (tasks). Ở mức độ cơ bản, một nhiệm vụ không gì hơn là gọi đến một module của Ansible
+
+Bằng cách gộp nhiều plays, Playbooks có thể dàn xếp việc triển khai trên nhiều máy, chạy một số bước nhất định trên nhóm máy chủ web, sau đó một số khác trên nhóm máy cơ sở dữ liệu, sau đó lại là một nhóm lệnh khác trên các máy chủ web ... cứ vậy cho đến khi hoàn thành.
+
+"plays" ít hoặc nhiều có những nét tương đồng với những môn thể thao. Chúng ta có có thể có khá nhiều plays ảnh hưởng đến hệ thống của chúng ta theo nhiều cách khác nhau. Điều đó nghĩa là nếu chúng ta định nghĩa ra một mô hình hoặc một trạng thái, chúng ta có thể chạy nhiều plays khác nhau tại các thời điểm khác nhau.
+
+Dưới đây là một ví dụ về một playbooks chỉ chứa 1 plays:
+
+\begin{lstlisting}[label={lst:ansbile_playbook_example},caption={Ví dụ về playbooks của Ansible},morekeywords={hosts, vars, tasks, name, yum, http_port, max_clients, remote_user, template, service, handlers, notify, state, pkg, src, dest}]
+- hosts: webservers
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+  - name: ensure apache is at the latest version
+    yum: pkg=httpd state=latest
+  - name: write the apache config file
+    template: src=/srv/httpd.j2 dest=/etc/httpd.conf
+    notify:
+    - restart apache
+  - name: ensure apache is running
+    service: name=httpd state=started
+  handlers:
+    - name: restart apache
+      service: name=httpd state=restarted
+\end{lstlisting}
+
+Trong playbooks trên, chúng ta khai báo một cụm \textbf{webservers} ở cổng 80 và có số client tối đa là 200, sử dụng user root để điều khiển. Playbooks cũng thiết lập một số công việc và trạng thái mong muốn với nó:
+
+\begin{itemize}
+\item Đảm bảo chắc chắn rằng Apache httpd server là phiên bản mới nhất
+\item Đảm bảo config của Apache \textbf{/etc/httpd.conf} giống như template có sẵn ở \textbf{/srv/httpd.j2}. Đồng thời thiết lập thông báo khi Apache restart.
+\item Đảm bảo rằng Apache đã được khởi động
+\end{itemize}
+
+
