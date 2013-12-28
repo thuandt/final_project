@@ -1,10 +1,14 @@
 \chapter{Tổng quan về tự động hóa hệ thống}
+
 \newpage
 \clearpage
+
 \section{Lý do cần tự động hóa hệ thống}
 Không phải ai cũng biết rằng, công việc của quản trị hệ thống thường xoay quanh một loạt các nhiệm vụ lặp đi lặp lại: cấu hình máy chủ, tạo người dùng, quản lý ứng dụng, dịch vụ và các chương trình chạy nền khác. Những công việc này thường được lặp đi lặp lại nhiều lần trong vòng đời của một máy chủ, từ lúc xây dựng hệ thống đến khi ngừng hoạt động. Nó bao gồm cả những việc như quản lý cấu hình trên nhiều cụm máy chủ khác nhau, đồng bộ hóa cấu hình giữa chúng theo chức năng; triển khai backend cho các sản phẩm; triển khai các sản phẩm trên các cụm máy chủ dịch vụ; dọn rác khi đĩa đầy, xóa log không dùng đến, xóa cache ... và đôi lúc là dọn "rác" của những người tiền nhiệm.
 
 \newpage
+\clearpage
+
 \section{Các vấn đề nảy sinh}
 \begin{itemize}
 \item Quản trị hệ thống họ cũng là con người, họ có những vấn đề của con người\footnote{\url{http://en.wikipedia.org/wiki/Human_reliability}}. Điều nghiêm trọng nhất là quên và nhớ.
@@ -15,8 +19,9 @@ Một người quản trị hệ thống cho dù giỏi đến đâu cũng có s
 
 \end{itemize}
 
-
 \newpage
+\clearpage
+
 \section{Cách giải quyết vấn đề}
 \begin{itemize}
 \item \textbf{Chuẩn hóa quy trình làm việc}
@@ -34,6 +39,8 @@ Một điều đáng ngạc nhiên là có rất nhiều công ty, tập đoàn 
 \end{itemize}
 
 \newpage
+\clearpage
+
 \section{Sự cần thiết của các công cụ quản lý}
 
 Như đã nói ở trên, người quản trị hệ thống với những công việc lặp đi lặp lại này, điều thường thấy là người quản trị hệ thống sẽ cố gắng để tự động hóa chúng bằng các kịch bản (script) và các công cụ. Điều này dẫn đến sự phát triển của các ứng dụng và kịch bản tùy chỉnh. Những kịch bản này thường phức tạp, không có tài liệu đi kèm, và chỉ hoạt động trên một số hệ thống nhất định.
