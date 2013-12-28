@@ -6,15 +6,28 @@ Puppet là một công cụ quản lý cấu hình mã nguồn mở viết bằn
 
 Puppet là một công cụ để quản lý cấu hình và bảo trì hệ thống máy tính; ngôn ngữ cấu hình của nó rất đơn giản. Chúng ta chỉ cần chỉ cho Puppet thấy chúng ta muốn cấu hình máy tính của chúng ta như thế nào, nó sẽ thực hiện đúng những gì chúng ta muốn. Khi hệ thống có sự thay đổi chẳng hạn như một phiên bản cập nhật của gói phần mềm, thêm người dùng mới hay một cấu hình nào đó thay đổi, Puppet tự động cập nhật tất cả các máy chủ trong hệ thống đúng như cấu hình chúng ta muốn.
 
-\begin{figure}[htb]
-    \begin{center}
-    \fbox{\includegraphics[width=0.9\textwidth]{images/puppet_ssh_pp.png}}
-    \end{center}
-    \caption{Ví dụ về ngôn ngữ cấu hình của Puppet}
-    \label{fig:puppet_ssh_pp}
-\end{figure}
+\newpage
+\clearpage
 
-Như hình vẽ trên, Puppet đảm bảo rằng gói phần mềm \textbf{\textit{ssh}} được cài đặt và file cấu hình dịch vụ SSH \footnote{Secure Shell: \url{https://en.wikipedia.org/wiki/Secure_Shell}} \textbf{\textit{/etc/ssh/sshd\_config}} của tất cả các máy chủ trong hệ thống mà Puppet quản lý đều có cùng nội dung mới file đã định trước; thêm vào đó, Puppet đảm bảo việc dịch vụ này luôn được chạy giúp người quản trị hệ thống có thể can thiệp thủ công khi cần thiết.
+\begin{lstlisting}[label={lst:puppet_ssh_pp},caption={Ví dụ về ngôn ngữ cấu hình của Puppet},morekeywords={class, package, file, source, ensure, require, service, File, Package}]
+class ssh {
+    package { ssh:
+        ensure => installed
+    }
+    file { "/etc/ssh/sshd_config":
+        source => 'puppet:///modules/ssh/sshd_config',
+        ensure => present,
+        require => Package[ssh]
+    }
+    service { sshd:
+        ensure => running,
+        require => [File["/etc/ssh/sshd_config"], Package[ssh]]
+    }
+}
+\end{lstlisting}
+
+
+Trong mã nguồn \ref{lst:puppet_ssh_pp} phía trên, Puppet đảm bảo rằng gói phần mềm \textbf{\textit{ssh}} được cài đặt và file cấu hình dịch vụ SSH \footnote{Secure Shell: \url{https://en.wikipedia.org/wiki/Secure_Shell}} \textbf{\textit{/etc/ssh/sshd\_config}} của tất cả các máy chủ trong hệ thống mà Puppet quản lý đều có cùng nội dung mới file đã định trước; thêm vào đó, Puppet đảm bảo việc dịch vụ này luôn được chạy giúp người quản trị hệ thống có thể can thiệp thủ công khi cần thiết.
 
 \subsection{Kiến trúc hệ thống}
 
@@ -106,19 +119,22 @@ Ngoài Facts, Manifests, Catalogs, and Reports, Puppet còn hỗ trợ các ki�
 Các thành phần chính của Puppet bao gồm: Agent, Facter, ENC, Compiler, Transaction, RAL và Reporting
 
 
-\textbf{\large Agent}
+\textbf{\large Agents}
+\addcontentsline{toc}{paragraph}{Agents}
 
 
 Thành phần đầu tiên mà chúng ta tiếp xúc khi sử dụng Puppet là tiến trình agent. Trong các phiên bản trước của puppet, tiến trình này được tách riêng thành một tiến trình riêng biệt có tên là \textbf{\textit{puppetd}}, nhưng trong phiên bản 2.6 trở đi, chúng được tối giản hóa và bây giờ chúng được gọi bằng lệnh \textbf{\textit{puppet agent}}, tương tự như cách làm của Git\footnote{Một hệ thống quản lý mã nguồn phân tán \url{http://git-scm.com/}}. Các agent thực hiện rất ít các chức năng của riêng nó mà chủ yếu các công việc liên quan đến các cấu hình hay mã nguồn được thực hiện ở phía máy trạm như trong quy trình làm việc đã mô tả ở trên.
 
 
 \textbf{\large Facter}
+\addcontentsline{toc}{paragraph}{Facter}
 
 
 Thành phần tiếp theo sau agent là một công cụ bên ngoài gọi là \textbf{\textbf{facter}}, đó là một công cụ đơn giản được sử dụng để tìm kiếm và thu thập các thông tin về hệ thống nó đang chạy trên đó. Thông tin đó thường là hệ điều hành, địa chỉ IP, tên máy chủ, nhưng vì Facter là một công cụ có khả năng mở rộng nên rất nhiều các tổ chức thường thêm vào các plugin riêng họ để thu thập các thông tin khác mà họ cần. Các agent gửi những thông tin mà Facter đã thu thập được tới máy chủ trung tâm, nơi nó được tiếp quản và xử lý theo quy trình ở hình \ref{fig:puppet_dataflow}
 
 
 \textbf{\large External Node Classifier}
+\addcontentsline{toc}{paragraph}{External Node Classifier}
 
 
 Trên máy chủ trung tâm, thành phần đầu tiên chúng ta cần đề cập tới là External Node Classifier\footnote{Các lớp phân loại mở rộng} hay ENC. ENC chấp nhận tên máy trạm hoặc trả về các cấu trúc dữ liệu đơn giản có chứa các cấu hình cấp cao của máy chủ đó. ENC nói chung là một ứng dụng hay dịch vụ riêng biệt: điển hình là một vài sản phẩm mã nguồn mở như Puppet Dashboard hay Foreman; đôi khi nó được tích hợp vào hệ thống dữ liệu có sẵn chẳng hạn như máy chủ LDAP... Mục đích cơ bản của ENC là để xác định những gì mà các lớp chức năng thuộc về, kèm theo đó là những thông số cấu hình cho các lớp này. Ví dụ, một máy trạm có thể thuộc lớp \textbf{\textit{debian}} hay \textbf{\textit{webserver}} và chúng có tham số để báo rằng chúng ở trung tâm dữ liệu tại \textbf{\textit{atlanta}}
@@ -129,12 +145,14 @@ Một khi máy chủ trung tâm nhận được thông tin phân loại theo l�
 
 
 \textbf{\large Compiler}
+\addcontentsline{toc}{paragraph}{Compiler}
 
 
 Như đã đề cập ở trên, Puppet có một ngôn ngữ tùy chỉnh được xây dựng dành riêng cho việc cấu hình hệ thống. Trình biên dịch này bao gồm 3 khối: một bộ phân tích ngôn kiểu-Yacc\footnote{https://en.wikipedia.org/wiki/Yacc} đã được tùy chỉnh; một nhóm các lớp học sử dụng để tạo ra Cây cú pháp trừu tượng (Abstract Syntax Tree hay AST); sau cùng lớp biên dịch, nó xử lý các tương tác của tất cả các lớp, đồng thời cũng có chức năng như API và là một phần của hệ thống.
 
 
 \textbf{\large Transaction}
+\addcontentsline{toc}{paragraph}{Transaction}
 
 
 Khi các Catalog đã được xây dựng thành công, nó được chuyển qua cho lớp Transaction. Trong một hệ thống mà máy trạm và máy chủ trung tâm được tách biệt, bộ phận này được chạy trên máy trạm, nó có nhiệm vụ kéo xuống các Catalog qua giao thức HTTP như Hình \ref{fig:puppet_timing_diagram}.
@@ -143,6 +161,7 @@ Lớp Transaction thực hiện một công việc tương đối đơn giản: 
 
 
 \textbf{\large Resource Abstraction Layer}
+\addcontentsline{toc}{paragraph}{Resource Abstraction Layer}
 
 
 Như đã biết, lớp Transcaction là rất quan trọng sự hoàn thành các công việc trong Puppet, nhưng thật ra, tất cả các công việc được thực sự thực hiện bởi lớp tài nguyên trừu tượng (Resource Abstraction Layer, viết tắt là RAL). Đây cũng là một trong các thành phần thú vị nhất của Puppet.
@@ -153,6 +172,7 @@ Như đã nói, lớp Transaction không thực sự ảnh hưởng  trực ti�
 
 
 \textbf{\large Reporting}
+\addcontentsline{toc}{paragraph}{Reporting}
 
 
 Trong quá trình lớp transaction đi theo các đồ thị và sử dụng RAL để thay đổi các cấu hình của hệ thống, các bản báo cáo được tạo ra. Báo cáo này bao gồm hầu hết cac sự kiện được tạo ra bởi những thay đổi trong hệ thống. Những sự kiện này, chúng là phản ảnh toàn diện về những công việc đã thực hiện: mốc thời gian thay đổi, giá trị trước đó, giá trị mới và bất kì thông báo nào được tạo ra, và tất nhiên là việc thay đổi đó thành công hay thất bại.
@@ -167,6 +187,7 @@ Sau khi giao dịch hoàn tất, một số số liệu cơ bản được tính
 Trong mục này chúng ta sẽ tìm hiểu các thành phần hạ tầng của Puppet
 
 \textbf{\large Hệ thống các Plugin}
+\addcontentsline{toc}{paragraph}{Hệ thống plugins}
 
 Một trong những điều tuyệt vời của Puppet là nó có khả năng mở rộng rất tốt. Có ít nhất 12 loại mở rộng khác nhau của Puppet, có nghĩa nó có thể sư dụng cho bất kì ai. Ví dụ, chúng ta có thể bổ sung các tùy chỉnh trong các lĩnh vực sau:
 
@@ -182,10 +203,13 @@ Tuy nhiên, do tính chất phân tán tự nhiên của Puppet nên cần có m
 Điều này khiến cho việc nâng cấp các agent của Puppet mà không bao giờ ảnh hưởng tới những gói cốt lõi nhất. Điều này vô cùng quan trọng trong các hệ thống Puppet có độ tùy chỉnh cao.
 
 \textbf{\large Indirector}
+\addcontentsline{toc}{paragraph}{Indirector}
+
 
 Indirector là một dạng của chuẩn Inversion of Control\footnote{\url{https://en.wikipedia.org/wiki/Inversion_of_control}} (IoC) framework với khả năng mở rộng cao. IoC cho phép chúng ta tách biệt việc phát triển các chức năng với việc kiểm soát các chức năng mà bạn đang sử dụng. Trong trường hợp của Puppet, chúng cho phép nhiều plugin cùng cung cấp các chức năng chẳng hạn như việc trình biên dịch đưa thông tin qua HTTP hoặc tải nó khi nó đang chạy hay việc chuyển đổi giữa việc thay đổi cấu hình nhỏ hơn là thay đổi cả source code. Indirector là một dạng thể hiện đơn giản của IoC. Tất các lớp bắt tay nhau làm việc từ lớp này tới lớp khác thông qua Indirector bằng một giao diện chuẩn REST\footnote{\url{https://en.wikipedia.org/wiki/REST}}. Việc này có nghĩa có thể chuyển các máy trạm chạy ở chế độ Serverless với đầu cuối HTTP để lấy cái danh mục về thay vì sử dụng một đầu cuối đã được biên dịch.
 
 \textbf{\large Hệ thống mạng}
+\addcontentsline{toc}{paragraph}{Hệ thống mạng}
 
 
 Một câu hỏi được đặt ra khi viết nguyên mẫu của Puppet năm 2004 là sẽ sử dụng XMLRPC hay SOAP, những nhà phát triển đã chọn XMLRPC. Tất nhiên là chúng vẫn làm việc được nhưng nó gặp những vấn đề mà tất cả những người khác đều gặp phải: Nó không có một chuẩn giao diện giữa các thành phần, nó có xu hướng phức tạp rất nhanh.
