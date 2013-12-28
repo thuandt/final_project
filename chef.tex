@@ -32,6 +32,8 @@ Cookbook là một yếu tố rất quan trọng và có thể coi là một th�
 Phần dưới đây sẽ cho chúng ta biết chi tiết hơn về các thành phần đã kể trên
 
 \textbf{\large Các nút}
+\addcontentsline{toc}{paragraph}{Các nút}
+
 
 Một nút trong hệ thống của Chef có thể là một máy chủ vật lý, máy chủ ảo hoặc là một máy chủ trên mây, hoặc một thiết bị mạng. Chúng được cấu hình và duy trì bởi chef-client.
 
@@ -78,6 +80,8 @@ Ohai là một công cụ được sử dụng để phát hiện các thuộc t
 Những thuộc tính được thu thập bởi Ohai là các thuộc tính tự động, trong đó các thuộc tính được sử dụng bởi các chef-client để đảm bảo rằng những thuộc tính này vẫn không thay đổi sau khi các chef-client được thực hiện cấu hình các nút.
 
 \textbf{\large Máy trạm}
+\addcontentsline{toc}{paragraph}{Máy trạm}
+
 
 Một máy trạm là một máy tính được cấu hình để chạy Knife. Nó cũng dùng để đồng bộ hóa với các chef-repo, cũng tương tác với một máy chủ duy nhất. Vị trí của máy trạm là nơi mà từ đó người dùng sẽ làm hầu hết công việc của họ, bao gồm:
 
@@ -90,6 +94,8 @@ Một máy trạm là một máy tính được cấu hình để chạy Knife. 
 \end{itemize}
 
 \textbf{\large Knife}
+\addcontentsline{toc}{paragraph}{Knife}
+
 
 Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các chef-repo cục bộ tại máy trạm và máy chủ. Knife giúp cho người dùng có thể quản lý:
 
@@ -105,6 +111,8 @@ Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các
 \end{itemize}
 
 \textbf{\large Chef-Repo}
+\addcontentsline{toc}{paragraph}{Chef-Repo}
+
 
 Chef-repo là nơi mà các đối tượng dữ liệu sau được lưu trữ:
 
@@ -123,12 +131,15 @@ Knife được sử dụng để upload ữu liệu từ chef-repo lên máy ch�
 Con dao được sử dụng để upload dữ liệu đến máy chủ từ các đầu bếp-repo. Sau khi tải lên, dữ liệu được sử dụng bởi các đầu bếp-client để quản lý tất cả các nút đã được đăng ký với máy chủ và để đảm bảo rằng các sách dạy nấu ăn đúng, môi trường, vai trò, và các thiết lập khác được áp dụng cho các nút một cách chính xác.
 
 \textbf{\large Máy chủ}
+\addcontentsline{toc}{paragraph}{Máy chủ}
+
 
 Các máy chủ hoạt động như một trung tâm chứa dữ liệu cấu hình. Các máy chủ lưu trữ các cookbooks, chính sách sẽ được áp dụng cho các nút, và các metadata được quản lý bởi chef-client. Các nút sử dụng chef-client để yêu cầu máy chủ các thông tin chi tiết về cấu hình, chẳng hạn như recipes, templates hay các tệp tin. chef-client thực hiện các công việc của mình trên từng nút mà không phải là trên máy chủ. Cách tiếp cận theo hướng phân phối mở rộng này khá tương ứng với mô hình của Puppet.
 
 Hosted Enterprise Chef là một phiên bản máy chủ của Chef. Hosted Enterprise Chef được xây dựng dựa trên điện toán đám mây, có khả năng mở rộng và luôn sẵn sàng 24x7/365. Hosted Enterprise Chef có thể quản lý bất kì máy chủ nào mà không yêu cầu nó phải được thiết lập và quản lý từ phía sau tường lửa.
 
 \textbf{\large Cookbooks}
+\addcontentsline{toc}{paragraph}{Cookbooks}
 
 
 Cookbook là đơn vị cơ bản của Chef trong việc cấu hình và phân phối các chính sách. Mỗi cookbook định nghĩa một kịch bản, chẳng hạn như tất cả mọi thứ cần thiết để cài đặt và cấu hình MySQL, và sau đó nó chứa tất cả các thành phần được yêu cầu để hỗ trợ kịch bản đó, bao gồm:
