@@ -82,8 +82,6 @@ Vì thế, các agent có quyền truy cập vào thông tin riêng trên hệ t
 
 Ngoài các thành phần ở trong quy trình làm việc này, có rất nhiều loại dữ liệu được Puppet sử dụng cho các giao tiếp nội bộ của nó. Các loại dữ liệu rất quan trọng, bởi vì chúng hoàn thực hiện tất cả các thông tin liên lạc, đồng thời chúng cũng cung cấp các giao diện công cộng cho những công cụ khác sử dụng hay làm việc với chúng.
 
-\newpage
-\clearpage
 Các kiểu dữ liệu quan trọng nhất trong Puppet là:
 
 \begin{itemize}
@@ -218,6 +216,140 @@ Trong phiên bản 0.25 phát hành năm 2008, những nhà phát triển đã b
 
 Các phiên bản mới của Puppet đã dần loại bỏ hoàn toàn các XMLRPC
 
+\subsection{Cài đặt và sử dụng}
+
+Trong các phần trước chúng ta đã tìm hiểu cách thức hoạt động, kiến trúc hệ thống và hạ tầng của Puppet. Trong phần này, chúng ta sẽ tìm hiểu cơ bản về việc cài đặt và sử dụng Puppet trong môi trường Linux.
+
+\textbf{\large Cách cài đặt Puppet trên một số HĐH Linux phổ dụng}
+\addcontentsline{toc}{paragraph}{Cách cài đặt}
+
+Puppet có thể được cài đặt và sử dụng trên rất nhiều các nền tảng khác nhau bao gồm:
+
+\begin{itemize}
+\item Red Hat Enterprise Linux (RHEL), CentOS, Fedora \& Oracle Enterprise Linux
+\item Debian và Ubuntu
+\item Mandrake và Mandriva
+\item Gentoo
+\item Solaris và OpenSolaris
+\item MacOS X và MacOS X Server
+\item *BSD - Các hệ điều hành họ BSD
+\item AIX
+\item HP UX
+\item Microsoft Windows (tuy nhiên có một số hạn chế nhất định)
+\end{itemize}
+
+Trên một số nền tảng, Puppet có thể quản lý rất nhiều các loại cấu hình khác nhau bao gồm:
+\begin{itemize}
+  \item Files
+  \item Services
+  \item Packages
+  \item Users
+  \item Groups
+  \item Cron jobs
+  \item SSH keys
+  \item Nagios configuration
+\end{itemize}
+
+Đối với Puppet, các agent và master server có cách cài đặt giống nhau, mặc dù hầu hết các hệ điều hành và bản phân phối các gói được phân chia theo chức năng của master và agent thành các gói riêng biệt. Trên một số hệ điều hành và bản phân phối, bạn cũng sẽ cần phải cài đặt Ruby cùng các thư viện của nó và số gói bổ sung cần thiết khác. Hầu hết các hệ thống đóng gói tốt sẽ có hầu hết các gói cần thiết, điển hình là Ruby - đó là yếu tố tiên quyết để có thể chạy được Puppet.
+
+Trong nội dung hạn chế của đồ án này, chúng ta sẽ chỉ tìm hiểu cách cài đặt trên 2 bản phân phối Linux phổ biến nhất là RHEL và Debian (tương tự với CentOS hay Ubuntu). Chúng ta sử dụng repo của \textbf{Puppet Labs} để cài đặt Puppet vì ở đây là repo của nơi phát triển Puppet nên nó luôn đi kèm phiên bản mới cùng các bản vá bảo mật đi kèm.
+
+\textbf{• Cách cài đặt Puppet trên RHEL}
+
+Đối với máy chủ trung tâm:
+
+\begin{lstlisting}[label={lst:puppet_install_master_rhel},caption={Cách cài đặt puppet master trên RHEL}, language=bash, deletekeywords={enable, true}]
+# Install Puppet Labs repo
+rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+# Download puppet-server from Puppet Labs
+yum install -y puppet-server
+# Start puppet master
+/etc/init.d/puppetmaster start
+# Set Puppet Master to run on startup
+puppet resource service puppetmaster ensure=running enable=true
+\end{lstlisting}
+
+Đối với agent:
+
+\begin{lstlisting}[label={lst:puppet_install_agent_rhel},caption={Cách cài đặt puppet agent trên RHEL}, language=bash, deletekeywords={enable, true}]
+# Add the puppet labs repo
+rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+# Install the puppet agent
+yum install -y puppet
+# Set Puppet Agent to run on startup
+puppet resource service puppet ensure=running enable=true
+\end{lstlisting}
+
+\newpage
+\clearpage
+
+\textbf{• Cách cài đặt Puppet trên Debian}
+
+Đối với máy chủ trung tâm:
+
+\begin{lstlisting}[label={lst:puppet_install_master_debian},caption={Cách cài đặt puppet master trên Debian}, language=bash, deletekeywords={enable, true}]
+# Download Puppet Labs repo
+wget http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb
+# Install Puppet Labs repo
+sudo dpkg -i puppetlabs-release-wheezy.deb
+# Install puppetmaster package
+sudo apt-get update
+sudo apt-get install puppetmaster
+# Set Puppet Master to run on startup
+puppet resource service puppetmaster ensure=running enable=true
+\end{lstlisting}
+
+Đối với agent:
+
+\begin{lstlisting}[label={lst:puppet_install_agent_debian},caption={Cách cài đặt puppet agent trên Debian}, language=bash, deletekeywords={enable, true}]
+# Download Puppet Labs repo
+wget http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb
+# Install Puppet Labs repo
+sudo dpkg -i puppetlabs-release-wheezy.deb
+# Install puppet package
+sudo apt-get update
+sudo apt-get install puppet
+# Set Puppet Agent to run on startup
+puppet resource service puppet ensure=running enable=true
+\end{lstlisting}
+
+\textbf{\large Cách cấu hình cơ bản hệ thống Puppet}
+\addcontentsline{toc}{paragraph}{Cách cấu hình cơ bản}
+
+Như đã nói ở trên, tuy các nền tảng khác nhau có các cách cài đặt khác nhau nhưng việc cấu hình trên các nền tảng đều tương tự nhau.
+
+Các agent liên lạc với master qua các kênh SSL mã hóa, vì thế, đầu tiên chúng ta phải thiết lập kênh liên lạc cho các agent tới master.
+
+\newpage
+\clearpage
+
+\begin{lstlisting}[label={lst:puppet_config_ssl},caption={Thiết lập kết nối qua kênh SSL}, language=bash, deletekeywords={test}]
+# On the client machine, request a certificate to master:
+puppet agent --server puppet --waitforcert 60 --test
+# On the Puppetmaster machine, view a list of all certificates waiting to be signed:
+puppet cert --list
+#Sign the certificate for all clients
+puppet cert --sign --all
+\end{lstlisting}
+
+Chú ý: Puppet master phải mở firewall ở port 8140 để các agent có thể kết nối tới được.
+
+Sau khi đã thiết lập các kênh liên lạc từ các agent tới master, chúng ta bắt đầu quá trình thiết lập cấu hình cho các node. Sẽ có rất nhiều các thiết lập phải cấu hình tùy theo nhu cầu hệ thống thực tế. Ví dụ dưới dây là một thiết lập cho \textbf{class sudo}
+
+\begin{lstlisting}[label={lst:puppet_config_class_sudo},caption={Cấu hình class sudo của Puppet},morekeywords={class, file, source, owner, group, mode, source}]
+# /etc/puppet/manifests/classes/sudo.pp
+
+class sudo {
+  file { "/etc/sudoers":
+    owner => "root",
+    group => "root",
+    mode  => 440,
+    source => "puppet://puppet.labs/files/sudoers"
+  }
+}
+\end{lstlisting}
+
+Các thiết đặt cùng cấu hình chi tiết hơn chúng ta có thể tham khảo trên trang chủ tài liệu của Puppet tại địa chỉ: \url{http://docs.puppetlabs.com}. Tài liệu ở đây khá đầy đủ và chi tiết.
 
 \subsection*{Tóm lại}
 

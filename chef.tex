@@ -159,6 +159,94 @@ Chef-client sử dụng ngôn ngữ Ruby như một ngôn ngữ tham chiếu đ�
 \newpage
 \clearpage
 
+\subsection{Cài đặt và sử dụng}
+
+\textbf{\large Cách cài đặt Chef (server và client)}
+\addcontentsline{toc}{paragraph}{Cách cài đặt}
+
+Hiện tại Chef-Server chỉ hỗ trợ gói cài đặt cho RHEL và Ubuntu. Chef-Client hỗ trợ đa nền tảng hơn hơn và có script cài đặt đi kèm.
+
+\textbf{• Cách cài đặt Chef trên RHEL}
+
+Đối với Chef-Server:
+
+\begin{lstlisting}[label={lst:chef_install_server_rhel},caption={Cách cài đặt chef-server trên RHEL},language=bash]
+# Install chef-server
+rpm -ivh https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-server-11.0.10-1.el6.x86_64.rpm
+# Initial configuration for chef-server
+chef-server-ctl reconfigure
+\end{lstlisting}
+
+Đối với Chef-Client:
+
+\begin{lstlisting}[label={lst:chef_install_client_rhel},caption={Cách cài đặt chef-client trên RHEL},language=bash]
+# Install chef-client
+curl -L https://www.opscode.com/chef/install.sh | bash
+\end{lstlisting}
+
+\textbf{• Cách cài đặt Chef trên Ubuntu}
+
+Đối với Chef-Server:
+
+\begin{lstlisting}[label={lst:chef_install_server_ubuntu},caption={Cách cài đặt chef-server trên Ubuntu},language=bash]
+# Download chef-server package
+wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chef-server_11.0.10-1.ubuntu.12.04_amd64.deb
+# Install chef-server package
+sudo dpkg -i chef-server_11.0.10-1.ubuntu.12.04_amd64.deb
+# Initial configuration for chef-server
+sudo chef-server-ctl reconfigure
+\end{lstlisting}
+
+\newpage
+\clearpage
+
+Đối với Chef-Client:
+
+\begin{lstlisting}[label={lst:chef_install_client_ubuntu},caption={Cách cài đặt chef-client trên Ubuntu},language=bash]
+# Install chef-client
+curl -L https://www.opscode.com/chef/install.sh | bash
+\end{lstlisting}
+
+\textbf{Chú ý}: Chef-Server cần mở cổng 443 để các Chef-Client có thể liên lạc được với nó.
+
+\textbf{• Cách cài đặt Knife trên máy trạm}
+
+Như đã nói trong kiến trúc của Chef, cần có một máy trạm chứa công cụ Knife và chef-repo để đưa các lệnh tới máy chủ và các nút.
+
+Vì vậy chúng ta phải cài đặt chef-client trên máy trạm này, cài đặt công cụ knife và đồng bộ chef-repo.
+
+\begin{lstlisting}[label={lst:chef_install_knife},caption={Cách cài đặt knife và chef-repo},language=bash]
+# Install chef-client
+curl -O -L http://www.opscode.com/chef/install.sh | bash
+
+# Clone the Chef Repo skeleton directory to work in:
+cd ~/Development
+git clone https://github.com/opscode/chef-repo.git
+\end{lstlisting}
+
+\newpage
+\clearpage
+
+\textbf{\large Cách cấu hình cơ bản hệ thống Chef}
+\addcontentsline{toc}{paragraph}{Cách cấu hình cơ bản}
+
+Các bước cấu hình của Chef phức tạp hơn so với Puppet khá nhiều, ở đây chúng ta chỉ giới thiệu một số bước cấu hình đơn giản. Chi tiết về các cấu hình còn lại có thể tham khảo trên trang tài liệu của dự án: \url{http://docs.opscode.com}
+
+\begin{lstlisting}[label={lst:chef_basic_config},caption={Các bước cấu hình hệ thống Chef},language=bash]
+# Config knife
+knife configure
+...
+
+# List chef-client (nodes)
+knife client list
+
+# Bootstrap first client server
+knife bootstrap -u $USERNAME --sudo $FQDN_OF_CLIENT_SERVER
+\end{lstlisting}
+
+\newpage
+\clearpage
+
 \subsection*{Tóm lại}
 
 Các nguyên tắc cơ bản quan trọng của Chef là chúng ta (những người sử dụng) là những người biết rõ nhất về những gì môi trường của bản thân, những gì cần làm, và làm thế nào để duy trì được nó. Chef-client được thiết kế để không phá vỡ những điều như vậy. Và chỉ có chúng ta cũng như đồng nghiệp của chúng ta mới hiểu rõ ràng các vấn đề về kĩ thuật cũng như phải làm gì để giải quyết chúng. Chỉ chúng ta mới có thể hiểu được các vấn đề về con người(trình độ kỹ năng, những kĩ năng kiểm soát, và các vấn đề nội bộ khác), những thứ mà duy nhất chỉ doanh nghiệp hay tổ chức của bạn biết được giải pháp.
