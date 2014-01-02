@@ -1,4 +1,287 @@
 \chapter{Triển khai thực nghiệm}
-\section{Bài toán}
+\newpage
+\clearpage
+
+Trong các chương trước, chúng ta đã lần lượt đi tìm hiểu các khái niệm về tự động hóa hệ thống, sau đó là tìm hiểu một loạt các framework tiêu biểu, ở chương này chúng ta sẽ sử dụng Ansible để ứng dụng trong giải quyết một số công việc liên quan đến tự động hóa hệ thống.
+
+Người viết đồ án lựa chọn Ansible vì lý do các lý do sau:
+
+\begin{itemize}
+\item Ansible rất đơn giản để học và sử dụng.
+\item Ansible không yêu cầu phải đi kèm một hệ thống phần mềm phức tạp để triển khai.
+\item Ansible sử dụng ngôn ngữ Python - ngôn ngữ lập trình mà người viết đồ án khá thành thạo.
+\item Ansbile phù hợp với tư duy của người quản trị hệ thống. Bản thân người viết đồ án cũng là một quản trị hệ thống linux có kinh nghiệm.
+\end{itemize}
+
+\newpage
+\clearpage
+
+\section{Đặt bài toán}
+
+Như chúng ta đã biết, trong tự động hóa hệ thống có rất nhiều các vấn đề cần phải giải quyết. Với nội dung giới hạn của đồ án tốt nghiệp, người viết chỉ có thể triển khai giải quyết một số giới bài toán dựa trên những gì đã tìm hiểu được.
+
+Dưới đây là một bài toán mà người viết lựa chọn để đưa vào phần triển khai thực nghiệm của mình:
+
+
+\emph{\textbf{"Viết công cụ tự động tạo ra một máy chủ trên nền điện toán đám mây Google Compute Engine (GCE)\footnote{\url{https://cloud.google.com/products/compute-engine/}}. Sau đó tự động cài đặt và cấu hình hệ thống LAMP\footnote{\url{https://en.wikipedia.org/wiki/LAMP_stack}}; cùng với đó là tự động triển khai CMS Wordpress phiên bản mới nhất lên trên máy chủ vừa tạo."}}
+
 \section{Phân tích}
-\section{Triển khai}
+
+Với bài toán trên, chúng ta có thể phân tích ra những công việc cần phải làm như sau:
+
+\begin{enumerate}
+\item Tạo một máy chủ ảo trên nền tảng Google Compute Engine.
+\item Cài đặt LAMP stack và cấu hình các thông số cần thiết chuẩn bị cho việc triển khai Wordpress
+\item Triển khai Wordpress lên hệ thống máy chủ vừa tạo.
+\end{enumerate}
+
+Chúng ta sẽ phân tích chi tiết hơn vào từng công việc ở trên.
+
+\subsection{Tạo máy chủ trên hệ thống GCE}
+
+Ansible những phiên bản gần đây đã hỗ trợ sẵn module dành cho các dịch của Google Compute Engine bao gồm: gce, gce\_lb, gce\_net, gce\_pd
+
+\begin{itemize}
+\item \textbf{Module gce}\footnote{\url{http://www.ansibleworks.com/docs/modules.html\#gce}}: Dùng cho việc khởi tạo và xóa bỏ một \textbf{\textit{instances}} trên  hệ thống GCE
+\item \textbf{Module gce\_lb}\footnote{\url{http://www.ansibleworks.com/docs/modules.html\#gce\_lb}}: Dùng để tạo ra hoặc xóa bỏ một \textbf{\textit{loadbalancer}} hay \textbf{\textit{httphealthcheck}} trên hệ thống GCE
+\item \textbf{Module gce\_net}\footnote{\url{http://www.ansibleworks.com/docs/modules.html\#gce\_net}}: Dùng để tạo ra hoặc xóa bỏ các \textbf{\textit{networks}} và \textbf{\textit{firewall rules}} trên hệ thống GCE.
+\item \textbf{Module gce\_pd}\footnote{\url{http://www.ansibleworks.com/docs/modules.html\#gce\_pd}}: Dùng để tạo mới hoặc xóa bỏ một \textbf{\textit{persistent disk}}
+\end{itemize}
+
+Với mục đích của chúng ta là tạo ra một instance trên hệ thống GCE, chúng ta sẽ sử dụng module \textbf{\textit{gce}}
+
+Các thông số cần thiết để tạo một máy chủ trên GCE gồm có:
+
+\begin{itemize}
+\item \textbf{image}: debian-7 hoặc centos-6 (ở đây chúng ta sẽ dùng centos-6)
+\item \textbf{instance\_names}: tên của các máy chủ cần tạo
+\item \textbf{machine\_type}: loại máy chủ cần tạo
+\item \textbf{zone}: trung tâm dữ liệu nơi lưu trữ máy chủ
+\end{itemize}
+
+Tất cả các module của GCE trong Ansible đều sử dụng \textbf{\textit{apache-libcloud}}, tuy nhiên chỉ từ version 0.13.3 trở nên thì module này mới hỗ trợ các dịch vụ của GCE.
+
+\subsection{Cài đặt và cấu hình LAMP stack}
+
+LAMP stack của chúng ta bao gồm:
+
+\begin{itemize}
+\item Phần mềm máy chủ web nginx
+\item Phần mềm cơ sở dữ liệu mysql
+\item PHP
+\end{itemize}
+
+Vì chúng ta sử dụng CentOS 6 nên chúng sẽ cần phải có thêm repo EPEL để có thể cài đặt một số gói cần thiết cho hệ thống.
+
+Ansible thao tác để cài đặt gói trên máy chủ khá đơn giản, với CentOS, chúng ta sử dụng module yum\footnote{\url{http://www.ansibleworks.com/docs/modules.html\#yum}} để làm việc này.
+
+Các gói cần thiết để cài đặt LAMP stack bao gồm:
+
+\begin{itemize}
+\item nginx
+\item mysql-server
+\item php, php-fpm, php-enchant, php-IDNA\_Convert, php-mbstring, php-mysql, php-PHPMailer, php-process, php-simplepie, php-xml
+\item Một số gọi phụ trợ cần thiết: MySQL-python, libselinux-python, libsemanage-python
+\end{itemize}
+
+Các công việc để cài đặt và cấu hình LAMP chuẩn bị cho triển khai CMS Wordpress bao gồm
+
+\begin{itemize}
+\item Cài đặt máy chủ cơ sở dữ liệu mysql-server
+\item Cấu hình SELinux cho phép mysql chạy tại bất kì cổng nào
+\item Tạo cấu hình cho MySQL từ template
+\item Khởi chạy dịch vụ mysqld
+\item Cài đặt máy chủ web nginx
+\item Copy cấu hình đã dựng sẵn của nginx dành riêng cho wordpress lên máy chủ
+\item Cài đặt cái gói php cần thiết
+\item Disable default pool của php-fpm
+\item Copy file cấu hình của php-fpm lên máy chủ
+\item Restart php-fpm
+\item Restart nginx
+\item Cấu hình firewall cho phép truy cập vào webserver
+\end{itemize}
+
+\newpage
+\clearpage
+
+\subsection{Triển khai CMS Wordpress}
+Danh sách các công việc cần làm để triển khai CMS Wordpress
+
+\begin{itemize}
+\item Download mã nguồn của Wordpress
+\item Extract mã nguồn này vào thư mục của webserver (đã cấu hình từ trước)
+\item Tạo group và người dùng \textit{wordpress} dùng cho việc chạy wordpress
+\item Tạo ra một bản ngẫu nhiêu các thông số cho file cấu hình
+\item Tạo cơ sở dữ liệu
+\item Tạo người dùng và gán quyền cho cơ sở dữ liệu
+\item Copy file config của wordpress lên máy chủ
+\item Chmod lại toàn bộ thư mục mã nguồn tại thư mục root của webserver
+\end{itemize}
+
+Công việc triển khai coi như hoàn tất. Lúc này người dùng vào trang cài đặt của Wordpress và hoàn thành nốt bước cuối cùng.
+
+\newpage
+\clearpage
+
+\section{Triển khai thực tế}
+
+Để triển khai việc tự động hóa bài toán mà chúng ta đã đặt ra, chúng ta sử dụng một playbook có cấu trúc như sau:
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_playbook},caption={Cấu trúc của playbook dùng để giải quyết bài toán đặt ra},morekeywords={hosts, group_vars, roles, tasks, files, handlers, templates, common}]
+
+hosts                           # inventory file
+group_vars/                     # Variables
+    all                         #
+    gce                         #
+site.yml                        # master playbook
+roles/                          #
+    common/                     #
+        files/                  #
+            epel.repo           # EPEL repo
+            iptables-save       # iptables rules
+            RPM-GPG-KEY-EPEL-6  # EPEL GPG key
+        handlers/               #
+            main.yml            #
+        tasks/                  #
+            main.yml            #
+    gce/                        # GCE group
+        tasks/                  #
+            main.yml            #
+    mysql/                      # mysql group
+        handlers/               #
+            main.yml            #
+        tasks/                  #
+            main.yml            #
+        templates/              #
+            my.cnf.j2           # MySQL config file
+    nginx/                      # nginx group
+        handlers/               #
+            main.yml            #
+        tasks/                  #
+            main.yml            #
+        templates/              #
+            default.conf        # config template
+    php-fpm/                    # php-fpm group
+        handlers/               #
+            main.yml            #
+        tasks/                  #
+            main.yml            #
+        templates/              #
+            wordpress.conf      # config template
+    wordpress/                  # wordpress group
+        tasks/                  #
+            main.yml            #
+        templates/              #
+            wp-config.php       # Wordpress config file
+
+\end{lstlisting}
+
+Trong mã nguồn trên, playbook chứa những danh sách những nhiệm vụ cần phải thực hiện, các template cho các cấu hình của từng roles, các handlers hay files ...
+
+Chi tiết nội dung của các mã nguồn, chúng ta có thể tham khảo đĩa CD đi kèm. Ở đây chúng ta chỉ ví dụ cách thực hiện của task gce để tạo ra một instance trên hệ thống GCE.
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_hosts},caption={Inventory file - hosts},morekeywords={name, hosts, gather_facts: no, roles, sudo, remote_user}]
+[gce]
+127.0.0.1
+\end{lstlisting}
+
+Ansible sẽ dùng module gce để giao tiếp với hệ thống GCE nên hosts file chỉ cần lấy địa chỉ localhost là đủ.
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_site},caption={Nội dung của site.yml},morekeywords={name, hosts, gather_facts: no, roles, sudo, remote_user}]
+---
+- name: Create GCE instances
+  hosts: gce
+  gather_facts: no
+  roles:
+    - gce
+
+- name: Install Wordpress, MySQL, Nginx, and PHP-FPM on GCE instances
+  hosts: wordpress-server
+  remote_user: mrtux
+  sudo: yes
+
+  roles:
+    - common
+    - mysql
+    - nginx
+    - php-fpm
+    - wordpress
+\end{lstlisting}
+
+Master playbook site.yml bao gồm 2 task chính là tạo instance và cài đặt - triển khai LAMP stack cùng Wordpress
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_gce},caption={Nội dung của roles/gce/tasks/main.yml},morekeywords={name, local_action, module, add_host, with_items}]
+---
+# This playbook will create GCE instances
+
+- name: Launch instances
+  local_action:
+    module: gce
+    instance_names: "{{ names }}"
+    machine_type: "{{ type }}"
+    image: "{{ image }}"
+    zone: "{{ zone }}"
+  register: gce
+
+- name: Wait for SSH to be available
+  local_action:
+    module: wait_for
+    host: "{{ item.public_ip }}"
+    port: 22
+    delay: 10
+    timeout: 60
+    state: started
+  with_items: gce.instance_data
+
+- name: Add public ip to inventory for another tasks
+  add_host: name={{ item.public_ip }} groups=wordpress-server
+  with_items: gce.instance_data
+
+\end{lstlisting}
+
+Khởi tạo instance bằng module gce với các tham số đã được khai báo. Sau đó chờ đến khi instance này hoàn tất quá trình, Ansible lấy thông tin về địa chỉ public ip của máy chủ này đưa vào inventory cho các task sau sử dụng.
+
+Để có thể sử dụng được module gce, chúng ta cần có module apache-libcloud phiên bản mới nhất, cùng với đó là private key trên hệ thống Google Cloud Platform. Chi tiết về cách cấu hình có thể tham khảo ở địa chỉ sau:
+
+\begin{itemize}
+\item \url{https://github.com/ansible/ansible/blob/devel/test/gce_tests.py}
+\item \url{http://docs.saltstack.com/topics/cloud/gce.html}
+\end{itemize}
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_group_vars_all},caption={Nội dung của group\_vars/all},morekeywords={wp_version, wp_sha256sum, wp_db_name, wp_db_user, wp_db_password, mysql_port, server_hostname}]
+---
+# Which version of Wordpress to deploy
+wp_version: 3.8
+wp_sha256sum: c419de49816b6483ab387567222898c02e8acd6ce64d6466a38f2fc05ebefb85
+
+# These are the Wordpress database settings
+wp_db_name: wordpress
+wp_db_user: wordpress
+wp_db_password: Th1sIsMyS3cr3tP@sswordF0rW0rdpress
+
+# You shouldn't need to change this.
+mysql_port: 3306
+
+# This is used for the nginx server configuration, but # access to the
+# Wordpress site is not restricted by a # named host.
+server_hostname: ansible-demo-site
+
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:labs_gce-wordpress-nginx_group_vars_gce},caption={Nội dung của group\_vars/gce},morekeywords={names, type, image, zone}]
+---
+# The variables file used by the playbooks for launch GCE instances
+
+names: demo
+type: n1-standard-1
+#image: debian-7
+image: centos-6
+zone: us-central1-a
+#zone:us-central1-b
+#zone:europe-west1-a
+#zone:europe-west1-b
+#persistent_boot_disk: yes
+
+\end{lstlisting}
+
+Không quá khó để có thể hiểu nội dung của những file cấu hình đã post ở trên, đúng như những gì chúng ta đã thấy trước đâu, ngôn ngữ cấu hình của Ansible cực kì đơn giản và dễ hiểu. Quá trình thực hiện playbook này trên máy của người viết khoảng 5 phút với điều kiện internet tốt.
