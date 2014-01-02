@@ -1,0 +1,39 @@
+---
+# This playbook will create or destroy GCE instances
+
+- name: Google Compute Engine
+  hosts: localhost
+  gather_facts: no
+  vars:
+    names: demo
+    type: n1-standard-1
+    image: centos-6
+    zone: us-central1-b
+  tasks:
+    - name: Launch instances
+      local_action:
+        module: gce
+        instance_names: "{{ names }}"
+        machine_type: "{{ type }}"
+        image: "{{ image }}"
+        zone: "{{ zone }}"
+      register: gce
+      tags:
+        - create
+
+    - name: Wait for SSH to be available
+      local_action:
+        module: wait_for
+        host: "{{ item.public_ip }}"
+        port: 22
+        delay: 10
+        timeout: 60
+        state: started
+      with_items: gce.instance_data
+      tags:
+        - create
+
+    - name: Terminate instances
+      local_action: gce instance_names={{ names }} state=absent
+      tags:
+       - destroy

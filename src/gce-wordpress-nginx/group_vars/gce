@@ -1,0 +1,12 @@
+---
+# The variables file used by the playbooks for launch GCE instances
+
+names: demo
+type: n1-standard-1
+#image: debian-7
+image: centos-6
+zone: us-central1-a
+#zone:us-central1-b
+#zone:europe-west1-a
+#zone:europe-west1-b
+#persistent_boot_disk: yes

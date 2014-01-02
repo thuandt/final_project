@@ -1,0 +1,18 @@
+---
+- name: Create GCE instances
+  hosts: gce
+  gather_facts: no
+  roles:
+    - gce
+
+- name: Install Wordpress, MySQL, Nginx, and PHP-FPM on GCE instances
+  hosts: wordpress-server
+  remote_user: mrtux
+  sudo: yes
+
+  roles:
+    - common
+    - mysql
+    - nginx
+    - php-fpm
+    - wordpress
