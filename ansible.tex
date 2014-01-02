@@ -5,6 +5,9 @@ Ansible là một giải pháp đơn giản được sử dụng trong việc t�
 
 Ansible là một phần mềm mã nguồn mở dùng trong việc quản lý cấu hình của hạ tầng CNTT, triển khai sản phẩm công nghệ, cùng như điều phối các hoạt động tự động hóa khác. Với chỉ một công cụ duy nhất, nó đem lại những hiệu quả lớn trước hàng loạt các thách thức về tự động hóa. Ansible cung cấp sự thay thế hiệu các chức năng cốt lỗi vốn có trong các giải pháp tự động hóa khác, đồng thời tìm kiếm lời giải cho những vấn đề chưa được giải quyết. Bao gồm sự phối hợp rõ ràng về các quy trình làm việc phức tạp và sự thống nhất về cấu hình của hệ điều hành và phần mềm ứng dụng triển khai.
 
+\newpage
+\clearpage
+
 Ansible tìm cách giữ cho những mô tả về các quy trình công việc dễ hiểu và có thể được thực hiện nhanh chóng. Điều đó đồng nghĩa với việc những người mới sử dụng Ansible có thể nhanh chóng hòa nhập vào các dự án mới, đồng thời dễ dàng hiểu được những công việc cho dù họ có tham gia vào dự án muộn hơn. Không chỉ vậy, Ansible luôn tìm cách tạo ra những công cụ thật mạnh mẽ cho những chuyên gia, nhưng bình đẳng cho tất cả các cấp độ kỹ năng của người sử dụng. Từ đó, rút ngắn thời gian đưa sản phẩm ra thị trường; giảm thiểu các lỗi có thể xảy ra do sự thay đổi cấu hình của hạ tầng CNTT.
 
 Ansible được thiết kế nhỏ gọn, tiện dụng, an toàn, và có độ tin cậy cao, không mất nhiều công sức trong việc học sử dụng cho dù là quản trị viên, nhà phát triển hay nhà quản lý.
@@ -126,36 +129,36 @@ Có rất nhiều điểm tích hợp có thể được sử dụng để mở 
 \item Các phương thức chuyển vận mới mà từ đó Ansible có thể giao tiếp với các máy mà mình quản lý
 \end{itemize}
 
-Cac đơn vị công việc trong ansible được đảm bảo bởi các module, đó là những chương trình nhỏ chạy trên máy chủ ở xa để đảm bảo rằng máy chủ đó được đưa vào trạng thái chỉ định phù hợp. Các module này có thể viết bằng ngôn ngữ bất kì chẳng hạn như Python, Perl, Ruby hay bash script. Vì vậy, người dùng có thể sử dụng công cụ yêu thích của họ để tạo ra các module cho bản thân mình hay những người khác.
+Các đơn vị công việc trong ansible được đảm bảo bởi các module, đó là những chương trình nhỏ chạy trên máy chủ ở xa để đảm bảo rằng máy chủ đó được đưa vào trạng thái chỉ định phù hợp. Các module này có thể viết bằng ngôn ngữ bất kì chẳng hạn như Python, Perl, Ruby hay bash script. Vì vậy, người dùng có thể sử dụng công cụ yêu thích của họ để tạo ra các module cho bản thân mình hay những người khác.
 
-Mặc định, các module lõi đã được tạo sẵn, có nghĩa là chúng giúp hệ thống có được một trạng thái mong muốn, và nếu không có thay đổi trạng thái được thực hiện, chúng không làm gì ảnh hưởng tới hệ thống cả. Ansible cũng làm cho nó trở nên dễ dàng để mô hình hóa các quá trình được không tạo sẵn, và cũng làm cho nó có thể chỉ đơn giản là chỉ cần đẩy ra kịch bản đơn giản và chạy chúng như mong muốn. Sử dụng các module có sẵn là thích hơn, tuy nhiên, nhưng điều quan trọng là để có thể để mô hình bất kỳ loại quá trình nào chứ không chỉ một mà rơi vào những giới hạn của chúng. Ansible luôn thực tế trong vấn đề này.
-
-
-\textbf{\large Playbooks}
-\addcontentsline{toc}{paragraph}{Playbooks}
+Mặc định, các module lõi đã được tạo sẵn, có nghĩa là chúng giúp hệ thống có được một trạng thái mong muốn, và nếu không có thay đổi trạng thái được thực hiện, chúng không làm gì ảnh hưởng tới hệ thống cả. Ansible cũng làm cho nó trở nên dễ dàng để mô hình hóa các quá trình được không tạo sẵn, và cũng làm cho nó có thể chỉ đơn giản là chỉ cần đẩy ra kịch bản đơn giản và chạy chúng như mong muốn. Sử dụng các module có sẵn là thích hơn, tuy nhiên, nhưng điều quan trọng hơn là có thể mô hình hóa bất kỳ loại quá trình nào chứ không chỉ một và rơi vào những giới hạn của chúng. Ansible luôn thực tế trong vấn đề này.
 
 
-Trong Ansible, mọi công việc từ cấu hình hệ điều hành cơ sở đến mô hình hóa quá trình cập nhật hay thực thi ngay lập tức các công việc trên một máy chủ ở xa đều sử dụng chung một công cụ. Những cấu hình cụ thể được viết ra trong Ansible được gọi là "Playbooks". Đó một dạng mã mà cả con người và máy tính đều có thể phân tích được (một dạng mã YAML\footnote{\url{http://www.ansibleworks.com/docs/YAMLSyntax.html}}), đồng thời làm cho việc hợp tác với những chương trình khác dễ dàng hơn. Và quan trọng nhất là dễ đọc và hiểu đối với cả những người không phải là nhà phát triển.
+\textbf{\large Playbook}
+\addcontentsline{toc}{paragraph}{Playbook}
 
-Playbooks làm cho việc cấu hình hệ thống hay triển khai hệ thống trên nhiều máy trở lên đơn giản hơn bất kỳ công cụ nào đã có. Playbooks rất phù hợp trong việc triển khai các ứng dụng phức tạp.
 
-Playbooks có thể khai báo cấu hình, nhưng nó cũng có thể dàn xếp các bước bất kì của một quá trình thủ công, thậm chí là cả những bước khác nhau khi mà chúng phải nhảy qua nhảy lại giữa một tập hợp các máy chủ với các nhiệm vụ khác nhau. Playbooks có thể thực hiện các công việc một cách đồng bộ hoặc không đồng bộ.
+Trong Ansible, mọi công việc từ cấu hình hệ điều hành cơ sở đến mô hình hóa quá trình cập nhật hay thực thi ngay lập tức các công việc trên một máy chủ ở xa đều sử dụng chung một công cụ. Những cấu hình cụ thể được viết ra trong Ansible được gọi là "Playbook". Đó một dạng mã mà cả con người và máy tính đều có thể phân tích được (một dạng mã YAML\footnote{\url{http://www.ansibleworks.com/docs/YAMLSyntax.html}}), đồng thời làm cho việc hợp tác với những chương trình khác dễ dàng hơn. Và quan trọng nhất là dễ đọc và hiểu đối với cả những người không phải là nhà phát triển.
 
-Trong khi bạn có thể chạy chính ansible cho các nhiệm vụ đột xuất, playbooks có thể được giữ trong các hệ thống kiểm soát mã nguồn và được sử dụng để đẩy đi các cấu hình hoặc đảm bảo cấu hình của hệ thống từ xa được giữ trong spec của nó.
+Playbook làm cho việc cấu hình hệ thống hay triển khai hệ thống trên nhiều máy trở lên đơn giản hơn bất kỳ công cụ nào đã có. Playbook rất phù hợp trong việc triển khai các ứng dụng phức tạp.
 
-Playbooks được thể hiện trong định dạng YAML với cú pháp được tối thiểu hóa. Những nhà phát triển Ansible đã hết sức cố gắng để làm cho nó không giống một ngôn ngữ lập trình hay script mà là giống một dạng mô hình cấu hình hay một quá trình.
+Playbook có thể khai báo cấu hình, nhưng nó cũng có thể dàn xếp các bước bất kì của một quá trình thủ công, thậm chí là cả những bước khác nhau khi mà chúng phải nhảy qua nhảy lại giữa một tập hợp các máy chủ với các nhiệm vụ khác nhau. Playbook có thể thực hiện các công việc một cách đồng bộ hoặc không đồng bộ.
 
-Mỗi playbooks bao gồm một hay nhiều \textbf{play} trong danh sách
+Trong khi bạn có thể chạy chính Ansible cho các nhiệm vụ đột xuất, playbook có thể được giữ trong các hệ thống kiểm soát mã nguồn và được sử dụng để đẩy đi các cấu hình hoặc đảm bảo cấu hình của hệ thống từ xa được giữ trong spec của nó.
 
-Mục tiêu của mỗi play là ánh xạ một nhóm các máy chủ với một số vai trò xác định, đại điện cho những điều mà Ansible gọi là nhiệm vụ (tasks). Ở mức độ cơ bản, một nhiệm vụ không gì hơn là gọi đến một module của Ansible
+Playbook được thể hiện trong định dạng YAML với cú pháp được tối thiểu hóa. Những nhà phát triển Ansible đã hết sức cố gắng để làm cho nó không giống một ngôn ngữ lập trình hay script mà là giống một dạng mô hình cấu hình hay một quá trình.
 
-Bằng cách gộp nhiều plays, Playbooks có thể dàn xếp việc triển khai trên nhiều máy, chạy một số bước nhất định trên nhóm máy chủ web, sau đó một số khác trên nhóm máy cơ sở dữ liệu, sau đó lại là một nhóm lệnh khác trên các máy chủ web ... cứ vậy cho đến khi hoàn thành.
+Mỗi playbook bao gồm một hay nhiều \textbf{play} trong danh sách
 
-"plays" ít hoặc nhiều có những nét tương đồng với những môn thể thao. Chúng ta có có thể có khá nhiều plays ảnh hưởng đến hệ thống của chúng ta theo nhiều cách khác nhau. Điều đó nghĩa là nếu chúng ta định nghĩa ra một mô hình hoặc một trạng thái, chúng ta có thể chạy nhiều plays khác nhau tại các thời điểm khác nhau.
+Mục tiêu của mỗi play là ánh xạ một nhóm các máy chủ với một số vai trò xác định, đại điện cho những điều mà Ansible gọi là nhiệm vụ (task). Ở mức độ cơ bản, một nhiệm vụ không gì hơn là gọi đến một module của Ansible
 
-Dưới đây là một ví dụ về một playbooks chỉ chứa 1 plays:
+Bằng cách gộp nhiều play, Playbooks có thể dàn xếp việc triển khai trên nhiều máy, chạy một số bước nhất định trên nhóm máy chủ web, sau đó một số khác trên nhóm máy cơ sở dữ liệu, sau đó lại là một nhóm lệnh khác trên các máy chủ web ... cứ vậy cho đến khi hoàn thành.
 
-\begin{lstlisting}[label={lst:ansible_playbook_example},caption={Ví dụ về playbooks của Ansible},morekeywords={hosts, vars, tasks, name, yum, http_port, max_clients, remote_user, template, service, handlers, notify, state, pkg, src, dest}]
+"play" ít hoặc nhiều có những nét tương đồng với những môn thể thao. Chúng ta có có thể có khá nhiều play ảnh hưởng đến hệ thống của chúng ta theo nhiều cách khác nhau. Điều đó nghĩa là nếu chúng ta định nghĩa ra một mô hình hoặc một trạng thái, chúng ta có thể chạy nhiều play khác nhau tại các thời điểm khác nhau.
+
+Dưới đây là một ví dụ về một playbook chỉ chứa 1 play:
+
+\begin{lstlisting}[label={lst:ansible_playbook_example},caption={Ví dụ về playbook của Ansible},morekeywords={hosts, vars, tasks, name, yum, http_port, max_clients, remote_user, template, service, handlers, notify, state, pkg, src, dest}]
 - hosts: webservers
   vars:
     http_port: 80
@@ -175,7 +178,7 @@ Dưới đây là một ví dụ về một playbooks chỉ chứa 1 plays:
       service: name=httpd state=restarted
 \end{lstlisting}
 
-Trong playbooks trên, chúng ta khai báo một cụm \textbf{webservers} ở cổng 80 và có số client tối đa là 200, sử dụng user root để điều khiển. Playbooks cũng thiết lập một số công việc và trạng thái mong muốn với nó:
+Trong playbook trên, chúng ta khai báo một cụm \textbf{webservers} ở cổng 80 và có số client tối đa là 200, sử dụng user root để điều khiển. Playbook cũng thiết lập một số công việc và trạng thái mong muốn với nó:
 
 \begin{itemize}
 \item Đảm bảo chắc chắn rằng Apache httpd server là phiên bản mới nhất

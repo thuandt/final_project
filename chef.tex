@@ -79,6 +79,9 @@ Ohai là một công cụ được sử dụng để phát hiện các thuộc t
 
 Những thuộc tính được thu thập bởi Ohai là các thuộc tính tự động, trong đó các thuộc tính được sử dụng bởi các chef-client để đảm bảo rằng những thuộc tính này vẫn không thay đổi sau khi các chef-client được thực hiện cấu hình các nút.
 
+\newpage
+\clearpage
+
 \textbf{\large Máy trạm}
 \addcontentsline{toc}{paragraph}{Máy trạm}
 
@@ -97,7 +100,7 @@ Một máy trạm là một máy tính được cấu hình để chạy Knife. 
 \addcontentsline{toc}{paragraph}{Knife}
 
 
-Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các chef-repo cục bộ tại máy trạm và máy chủ. Knife giúp cho người dùng có thể quản lý:
+Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các chef-repo cục bộ tại máy trạm và máy chủ. Knife giúp cho người dùng có thể quản lý những điều sau:
 
 \begin{itemize}
 \item Các nút
@@ -126,9 +129,10 @@ Chef-repo là nơi mà các đối tượng dữ liệu sau được lưu trữ:
 
 Chef-repo nằm trên một máy trạm và cần được đồng bộ hóa với hệ thống quản lý mã nguồn, chẳng hạn như git. Tất cả các dữ liệu trong chef-repo nên được đối xử như là mã nguồn.
 
-Knife được sử dụng để upload ữu liệu từ chef-repo lên máy chủ. Sau khi tải lên, dữ liệu được các chef-client sử dụng để quản lý tất cả các nút đã được đăng kí, đồng thời đảm bảo tất cả những thứ như cookbooks, cái thống số môi trường, roles và các thiết lập khác được áp dụng cho nút đó một cách đứng đắn.
+Knife được sử dụng để upload dữ liệu từ chef-repo lên máy chủ. Sau khi tải lên, dữ liệu được các chef-client sử dụng để quản lý tất cả các nút đã được đăng kí, đồng thời đảm bảo tất cả những thứ như cookbooks, cái thống số môi trường, roles và các thiết lập khác được áp dụng cho nút đó một cách đứng đắn.
 
-Con dao được sử dụng để upload dữ liệu đến máy chủ từ các đầu bếp-repo. Sau khi tải lên, dữ liệu được sử dụng bởi các đầu bếp-client để quản lý tất cả các nút đã được đăng ký với máy chủ và để đảm bảo rằng các sách dạy nấu ăn đúng, môi trường, vai trò, và các thiết lập khác được áp dụng cho các nút một cách chính xác.
+\newpage
+\clearpage
 
 \textbf{\large Máy chủ}
 \addcontentsline{toc}{paragraph}{Máy chủ}
@@ -230,7 +234,9 @@ git clone https://github.com/opscode/chef-repo.git
 \textbf{\large Cách cấu hình cơ bản hệ thống Chef}
 \addcontentsline{toc}{paragraph}{Cách cấu hình cơ bản}
 
-Các bước cấu hình của Chef phức tạp hơn so với Puppet khá nhiều, ở đây chúng ta chỉ giới thiệu một số bước cấu hình đơn giản. Chi tiết về các cấu hình còn lại có thể tham khảo trên trang tài liệu của dự án: \url{http://docs.opscode.com}
+Các bước cấu hình của Chef phức tạp hơn so với Puppet khá nhiều, ở đây chúng ta chỉ giới thiệu một số bước cấu hình đơn giản. Chi tiết về các cấu hình còn lại có thể tham khảo trên trang tài liệu của dự án: 
+
+\url{http://docs.opscode.com}
 
 \begin{lstlisting}[label={lst:chef_basic_config},caption={Các bước cấu hình hệ thống Chef},language=bash]
 # Config knife
