@@ -31,8 +31,7 @@ Cookbook là một yếu tố rất quan trọng và có thể coi là một th�
 \subsection{Các thành phần chính}
 Phần dưới đây sẽ cho chúng ta biết chi tiết hơn về các thành phần đã kể trên
 
-\textbf{\large Các nút}
-\addcontentsline{toc}{paragraph}{Các nút}
+\subsubsection{Các nút}
 
 
 Một nút trong hệ thống của Chef có thể là một máy chủ vật lý, máy chủ ảo hoặc là một máy chủ trên mây, hoặc một thiết bị mạng. Chúng được cấu hình và duy trì bởi chef-client.
@@ -82,8 +81,7 @@ Những thuộc tính được thu thập bởi Ohai là các thuộc tính tự
 \newpage
 \clearpage
 
-\textbf{\large Máy trạm}
-\addcontentsline{toc}{paragraph}{Máy trạm}
+\subsubsection{Máy trạm}
 
 
 Một máy trạm là một máy tính được cấu hình để chạy Knife. Nó cũng dùng để đồng bộ hóa với các chef-repo, cũng tương tác với một máy chủ duy nhất. Vị trí của máy trạm là nơi mà từ đó người dùng sẽ làm hầu hết công việc của họ, bao gồm:
@@ -96,8 +94,7 @@ Một máy trạm là một máy tính được cấu hình để chạy Knife. 
 \item Tương tác với các nút khi cần thiết, chẳng hạn thiết lập bootstrap cho một nút.
 \end{itemize}
 
-\textbf{\large Knife}
-\addcontentsline{toc}{paragraph}{Knife}
+\subsubsection{Knife}
 
 
 Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các chef-repo cục bộ tại máy trạm và máy chủ. Knife giúp cho người dùng có thể quản lý những điều sau:
@@ -113,8 +110,7 @@ Knife là một công cụ dòng lệnh cung cấp một giao diện giữa các
 \item Tìm kiếm các thông tin được index trên máy chủ
 \end{itemize}
 
-\textbf{\large Chef-Repo}
-\addcontentsline{toc}{paragraph}{Chef-Repo}
+\subsubsection{Chef-Repo}
 
 
 Chef-repo là nơi mà các đối tượng dữ liệu sau được lưu trữ:
@@ -134,16 +130,14 @@ Knife được sử dụng để upload dữ liệu từ chef-repo lên máy ch�
 \newpage
 \clearpage
 
-\textbf{\large Máy chủ}
-\addcontentsline{toc}{paragraph}{Máy chủ}
+\subsubsection{Máy chủ}
 
 
 Các máy chủ hoạt động như một trung tâm chứa dữ liệu cấu hình. Các máy chủ lưu trữ các cookbooks, chính sách sẽ được áp dụng cho các nút, và các metadata được quản lý bởi chef-client. Các nút sử dụng chef-client để yêu cầu máy chủ các thông tin chi tiết về cấu hình, chẳng hạn như recipes, templates hay các tệp tin. chef-client thực hiện các công việc của mình trên từng nút mà không phải là trên máy chủ. Cách tiếp cận theo hướng phân phối mở rộng này khá tương ứng với mô hình của Puppet.
 
 Hosted Enterprise Chef là một phiên bản máy chủ của Chef. Hosted Enterprise Chef được xây dựng dựa trên điện toán đám mây, có khả năng mở rộng và luôn sẵn sàng 24x7/365. Hosted Enterprise Chef có thể quản lý bất kì máy chủ nào mà không yêu cầu nó phải được thiết lập và quản lý từ phía sau tường lửa.
 
-\textbf{\large Cookbooks}
-\addcontentsline{toc}{paragraph}{Cookbooks}
+\subsubsection{Cookbooks}
 
 
 Cookbook là đơn vị cơ bản của Chef trong việc cấu hình và phân phối các chính sách. Mỗi cookbook định nghĩa một kịch bản, chẳng hạn như tất cả mọi thứ cần thiết để cài đặt và cấu hình MySQL, và sau đó nó chứa tất cả các thành phần được yêu cầu để hỗ trợ kịch bản đó, bao gồm:
@@ -165,8 +159,7 @@ Chef-client sử dụng ngôn ngữ Ruby như một ngôn ngữ tham chiếu đ�
 
 \subsection{Cài đặt và sử dụng}
 
-\textbf{\large Cách cài đặt Chef (server và client)}
-\addcontentsline{toc}{paragraph}{Cách cài đặt}
+\subsubsection{Cách cài đặt Chef (server và client)}
 
 Hiện tại Chef-Server chỉ hỗ trợ gói cài đặt cho RHEL và Ubuntu. Chef-Client hỗ trợ đa nền tảng hơn hơn và có script cài đặt đi kèm.
 
@@ -231,10 +224,9 @@ git clone https://github.com/opscode/chef-repo.git
 \newpage
 \clearpage
 
-\textbf{\large Cách cấu hình cơ bản hệ thống Chef}
-\addcontentsline{toc}{paragraph}{Cách cấu hình cơ bản}
+\subsubsection{Cách cấu hình cơ bản hệ thống Chef}
 
-Các bước cấu hình của Chef phức tạp hơn so với Puppet khá nhiều, ở đây chúng ta chỉ giới thiệu một số bước cấu hình đơn giản. Chi tiết về các cấu hình còn lại có thể tham khảo trên trang tài liệu của dự án: 
+Các bước cấu hình của Chef phức tạp hơn so với Puppet khá nhiều, ở đây chúng ta chỉ giới thiệu một số bước cấu hình đơn giản. Chi tiết về các cấu hình còn lại có thể tham khảo trên trang tài liệu của dự án:
 
 \url{http://docs.opscode.com}
 

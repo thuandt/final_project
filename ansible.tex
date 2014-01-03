@@ -99,8 +99,7 @@ Theo như ví dụ trên, Ansible có thể xử lý một cách đơn giản th
 
 \subsection{Các thành phần chính}
 
-\textbf{\large Modules}
-\addcontentsline{toc}{paragraph}{Modules}
+\subsubsection{Modules}
 
 
 Các module của Ansible là nguồn tài nguyên được phân phối cho các nút ở xa để yêu cầu chúng thực hiện một số nhiệm vụ hoặc đưa nút đó một vào một trạng thái thích hợp theo yêu cầu. Ansible luôn đi theo triết lý "batteries included", vì vậy chúng ta có rất nhiều module tuyệt vời dành cho hầu hết các công việc lõi của ngành CNTT. Điều này có nghĩa là những module này luôn được cập nhật và chúng ta không cần phải cố gắng tìm kiếm cách để cho nó làm việc trên nền tảng của chúng ta. Chúng ta có thể tưởng tượng những module này là các thành phần của một bộ công cụ hữu ích với các công cụ quản lý hệ thống và các playbooks như một hướng dẫn để xây dựng một hệ thống bằng những công cụ này.
@@ -115,9 +114,7 @@ Các khu vực khác bên ngoài lĩnh vực BigData cũng có thể tận dụn
 
 Để có thể tìm hiểu chi tiết hơn về chức năng của các module này trong Ansible, chúng ta có thể tham khảo trang tài liệu của Ansible Works. Tại địa chỉ \url{http://www.ansibleworks.com/docs/modules.html}
 
-\textbf{\large Plugins}
-\addcontentsline{toc}{paragraph}{Plugins}
-
+\subsubsection{Plugins}
 
 Có rất nhiều điểm tích hợp có thể được sử dụng để mở rộng Ansible, bao gồm:
 
@@ -134,8 +131,7 @@ Các đơn vị công việc trong ansible được đảm bảo bởi các modu
 Mặc định, các module lõi đã được tạo sẵn, có nghĩa là chúng giúp hệ thống có được một trạng thái mong muốn, và nếu không có thay đổi trạng thái được thực hiện, chúng không làm gì ảnh hưởng tới hệ thống cả. Ansible cũng làm cho nó trở nên dễ dàng để mô hình hóa các quá trình được không tạo sẵn, và cũng làm cho nó có thể chỉ đơn giản là chỉ cần đẩy ra kịch bản đơn giản và chạy chúng như mong muốn. Sử dụng các module có sẵn là thích hơn, tuy nhiên, nhưng điều quan trọng hơn là có thể mô hình hóa bất kỳ loại quá trình nào chứ không chỉ một và rơi vào những giới hạn của chúng. Ansible luôn thực tế trong vấn đề này.
 
 
-\textbf{\large Playbook}
-\addcontentsline{toc}{paragraph}{Playbook}
+\subsubsection{Playbook}
 
 
 Trong Ansible, mọi công việc từ cấu hình hệ điều hành cơ sở đến mô hình hóa quá trình cập nhật hay thực thi ngay lập tức các công việc trên một máy chủ ở xa đều sử dụng chung một công cụ. Những cấu hình cụ thể được viết ra trong Ansible được gọi là "Playbook". Đó một dạng mã mà cả con người và máy tính đều có thể phân tích được (một dạng mã YAML\footnote{\url{http://www.ansibleworks.com/docs/YAMLSyntax.html}}), đồng thời làm cho việc hợp tác với những chương trình khác dễ dàng hơn. Và quan trọng nhất là dễ đọc và hiểu đối với cả những người không phải là nhà phát triển.
@@ -153,10 +149,6 @@ Mỗi playbook bao gồm một hay nhiều \textbf{play} trong danh sách
 Mục tiêu của mỗi play là ánh xạ một nhóm các máy chủ với một số vai trò xác định, đại điện cho những điều mà Ansible gọi là nhiệm vụ (task). Ở mức độ cơ bản, một nhiệm vụ không gì hơn là gọi đến một module của Ansible
 
 Bằng cách gộp nhiều play, Playbooks có thể dàn xếp việc triển khai trên nhiều máy, chạy một số bước nhất định trên nhóm máy chủ web, sau đó một số khác trên nhóm máy cơ sở dữ liệu, sau đó lại là một nhóm lệnh khác trên các máy chủ web ... cứ vậy cho đến khi hoàn thành.
-
-"play" ít hoặc nhiều có những nét tương đồng với những môn thể thao. Chúng ta có có thể có khá nhiều play ảnh hưởng đến hệ thống của chúng ta theo nhiều cách khác nhau. Điều đó nghĩa là nếu chúng ta định nghĩa ra một mô hình hoặc một trạng thái, chúng ta có thể chạy nhiều play khác nhau tại các thời điểm khác nhau.
-
-Dưới đây là một ví dụ về một playbook chỉ chứa 1 play:
 
 \begin{lstlisting}[label={lst:ansible_playbook_example},caption={Ví dụ về playbook của Ansible},morekeywords={hosts, vars, tasks, name, yum, http_port, max_clients, remote_user, template, service, handlers, notify, state, pkg, src, dest}]
 - hosts: webservers
@@ -178,7 +170,9 @@ Dưới đây là một ví dụ về một playbook chỉ chứa 1 play:
       service: name=httpd state=restarted
 \end{lstlisting}
 
-Trong playbook trên, chúng ta khai báo một cụm \textbf{webservers} ở cổng 80 và có số client tối đa là 200, sử dụng user root để điều khiển. Playbook cũng thiết lập một số công việc và trạng thái mong muốn với nó:
+"play" ít hoặc nhiều có những nét tương đồng với những môn thể thao. Chúng ta có có thể có khá nhiều play ảnh hưởng đến hệ thống của chúng ta theo nhiều cách khác nhau. Điều đó nghĩa là nếu chúng ta định nghĩa ra một mô hình hoặc một trạng thái, chúng ta có thể chạy nhiều play khác nhau tại các thời điểm khác nhau.
+
+Trong playbook trên, nó chỉ chứa duy nhất một play, chúng ta khai báo một cụm \textbf{webservers} ở cổng 80 và có số client tối đa là 200, sử dụng user root để điều khiển. Playbook cũng thiết lập một số công việc và trạng thái mong muốn với nó:
 
 \begin{itemize}
 \item Đảm bảo chắc chắn rằng Apache httpd server là phiên bản mới nhất
@@ -190,8 +184,7 @@ Trong playbook trên, chúng ta khai báo một cụm \textbf{webservers} ở c�
 
 Ansible có thể cài đặt và chạy trên bất cứ máy tính nào có cài đặt Python 2.6. Hầu hết các nền tảng đều hỗ trợ mặc định Python trong hệ thống bao gồm cả RHEL, CentOS, Debian, Ubuntu hoặc bất cứ bản phân phối Linux nào hỗ trợ Python; Mac OS X, các hệ điều hành thuộc họ BSD ...
 
-\textbf{\large Cách cài đặt Ansible trên máy điều khiển}
-\addcontentsline{toc}{paragraph}{Cách cài đặt}
+\subsubsection{Cách cài đặt Ansible trên máy điều khiển}
 
 \textbf{• Cài đặt từ mã nguồn}
 
@@ -256,8 +249,7 @@ $ sudo easy_install pip
 $ sudo pip install ansible
 \end{lstlisting}
 
-\textbf{\large Cấu hình và làm quen với Ansible}
-\addcontentsline{toc}{paragraph}{Cấu hình và sử dụng}
+\subsubsection{Cấu hình và làm quen với Ansible}
 
 Ở phía trên chúng ta đã tìm hiểu cách cài đặt Ansible thông qua một số cách thông dụng, trong phần này chúng ta sẽ tìm hiểu các cấu hình và một số thao tác cơ bản với Ansible.
 
