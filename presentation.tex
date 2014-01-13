@@ -23,8 +23,8 @@
 \newcommand*\oldmacro{}
 \let\oldmacro\insertshortauthor
 \renewcommand*\insertshortauthor{
-      \leftskip=.3cm
-      \insertframenumber\,/\,\inserttotalframenumber\hfill\oldmacro
+  \leftskip=.3cm
+  \insertframenumber\,/\,\inserttotalframenumber\hfill\oldmacro
 }
 
 \usepackage{graphicx}
@@ -57,10 +57,10 @@
     \titlepage
 \end{frame}
 
-  \begin{frame}
-    \frametitle{Nội dung}
-    \tableofcontents
-  \end{frame}
+\begin{frame}
+  \frametitle{Nội dung}
+  \tableofcontents
+\end{frame}
 
 \section{Tổng quan}
 \begin{frame}{System Automation}
@@ -71,11 +71,11 @@
 
 \begin{frame}{Tại sao cần phải tự động hóa?}
   \begin{alertblock}\justifying
-  \begin{itemize}
-  \item \Large Giảm thiểu sự nhàm chán
-  \item \Large Tăng hiệu quả công việc
-  \item \Large Giảm thiểu sai sót không đáng có do yếu tố con người
-  \end{itemize}
+    \begin{itemize}
+      \item \Large Giảm thiểu sự nhàm chán
+      \item \Large Tăng hiệu quả công việc
+      \item \Large Giảm thiểu sai sót không đáng có do yếu tố con người
+    \end{itemize}
   \end{alertblock}
 \end{frame}
 
@@ -106,29 +106,31 @@
 
 \subsubsection*{Kiến trúc hệ thống của Puppet}
 \begin{frame}{Kiến trúc hệ thống của Puppet}
-\setlength{\topsep}{0pt}
-\begin{columns}
-\begin{column}{0.75\textwidth}
-    \begin{center}
-      \fbox{\includegraphics[width=\textwidth]{images/puppet_dataflow.png}}
-    \end{center}
-\end{column}
-\hfill
-\begin{column}{0.38\textwidth}
-\begin{scriptsize}
-  \begin{itemize}
-  \item \textbf{Agent}: Thực hiện những công việc mà Puppet Master yêu cầu.
-  \item \textbf{Puppet Master}: Máy chủ trung tâm.
-  \pause
-  \item \textbf{Facter}: Thu thập các thông tin cần thiết cho Puppet Master.
-  \pause
-  \item \textbf{Catalog}: Một đồ thị về các tài nguyên của máy chủ được quản lý và các rằng buộc giữa chúng.
-  \pause
-  \item \textbf{Reporting} \\ Các bản báo cáo.
-  \end{itemize}
-\end{scriptsize}
-\end{column}
-\end{columns}
+  \setlength{\topsep}{0pt}
+  \begin{columns}
+    \begin{column}{0.75\textwidth}
+      \begin{center}
+        \fbox{\includegraphics[width=\textwidth]{images/puppet_dataflow.png}}
+      \end{center}
+    \end{column}
+    \hfill
+    \pause
+    \begin{column}{0.38\textwidth}
+      \begin{scriptsize}
+        \begin{itemize}
+          \item \textbf{Agent}: Thực hiện những công việc mà Puppet Master yêu cầu.
+          \pause
+          \item \textbf{Puppet Master}: Máy chủ trung tâm.
+          \pause
+          \item \textbf{Facter}: Thu thập các thông tin cần thiết cho Puppet Master.
+          \pause
+          \item \textbf{Catalog}: Một đồ thị về các tài nguyên của máy chủ được quản lý và các rằng buộc giữa chúng.
+          \pause
+          \item \textbf{Reporting}: Các bản báo cáo.
+        \end{itemize}
+      \end{scriptsize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \subsection{Chef}
@@ -148,27 +150,33 @@
 
 \subsubsection*{Kiến trúc hệ thống của Chef}
 \begin{frame}{Kiến trúc hệ thống của Chef}
-\setlength{\topsep}{0pt}
-\begin{columns}
-\begin{column}{0.75\textwidth}
-    \begin{center}
-      \fbox{\includegraphics[width=0.85\textwidth]{images/chef_quick_overview.png}}
-    \end{center}
-\end{column}
-\hfill
-\begin{column}{0.38\textwidth}
-\begin{scriptsize}
-  \begin{itemize}
-    \item \textbf{Các nút}: máy chủ vật lý, máy chủ ảo hay máy chủ nền điện toán đám mây.
-    \item \textbf{Máy chủ}: trung tâm chứa dữ liệu cấu hình.
-    \item \textbf{Máy trạm}: nơi được cấu hình để chạy Knife, nơi lưu trữ chef-repo.
-    \item \textbf{Knife}: một công cụ dòng lệnh cung cấp giao diện tương tác giữa chef-repo với máy chủ hoặc máy trạm.
-    \item \textbf{Chef-repo}: nơi lưu trữ các đối tượng dữ liệu.
-    \item \textbf{Cookbook}: đơn vị cơ bản của Chef. Mỗi cookbook định nghĩa một kịch bản cấu hình.
-  \end{itemize}
-\end{scriptsize}
-\end{column}
-\end{columns}
+  \setlength{\topsep}{0pt}
+  \begin{columns}
+    \begin{column}{0.75\textwidth}
+      \begin{center}
+        \fbox{\includegraphics[width=0.85\textwidth]{images/chef_quick_overview.png}}
+      \end{center}
+    \end{column}
+    \hfill
+    \pause
+    \begin{column}{0.38\textwidth}
+      \begin{scriptsize}
+        \begin{itemize}
+          \item \textbf{Các nút}: máy chủ vật lý, máy chủ ảo hay máy chủ nền điện toán đám mây.
+          \pause
+          \item \textbf{Máy chủ}: trung tâm chứa dữ liệu cấu hình.
+          \pause
+          \item \textbf{Máy trạm}: nơi được cấu hình để chạy Knife, nơi lưu trữ chef-repo.
+          \pause
+          \item \textbf{Knife}: một công cụ dòng lệnh cung cấp giao diện tương tác giữa chef-repo với máy chủ hoặc máy trạm.
+          \pause
+          \item \textbf{Chef-repo}: nơi lưu trữ các đối tượng dữ liệu.
+          \pause
+          \item \textbf{Cookbook}: đơn vị cơ bản của Chef. Mỗi cookbook định nghĩa một kịch bản cấu hình.
+        \end{itemize}
+      \end{scriptsize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \subsection{Ansible}
@@ -188,26 +196,27 @@
 
 \subsubsection*{Kiến trúc hệ thống của Ansible}
 \begin{frame}{Kiến trúc hệ thống của Ansible}
-\setlength{\topsep}{0pt}
-\begin{columns}
-\begin{column}{0.75\textwidth}
-    \begin{center}
-      \fbox{\includegraphics[width=\textwidth]{images/ansible_architect.jpg}}
-    \end{center}
-\end{column}
-\hfill
-\begin{column}{0.38\textwidth}
-\begin{scriptsize}
-\begin{itemize}
-\item \textbf{Modules}: Ansible có rất sẵn các module phục vụ hầu hết các công việc cơ bản của ngành IT.
-\pause
-\item \textbf{Plugins}: Ansible có rất nhiều các thành phần để chúng ta có thể tích hợp thêm những thứ cần thiết.
-\pause
-\item \textbf{Playbooks}: là tập hợp những cấu hình cụ thể thực hiện một số các công việc nhất định.
-\end{itemize}
-\end{scriptsize}
-\end{column}
-\end{columns}
+  \setlength{\topsep}{0pt}
+  \begin{columns}
+    \begin{column}{0.75\textwidth}
+      \begin{center}
+        \fbox{\includegraphics[width=\textwidth]{images/ansible_architect.jpg}}
+      \end{center}
+    \end{column}
+    \hfill
+    \pause
+    \begin{column}{0.38\textwidth}
+      \begin{scriptsize}
+        \begin{itemize}
+          \item \textbf{Modules}: Ansible có rất sẵn các module phục vụ hầu hết các công việc cơ bản của ngành IT.
+          \pause
+          \item \textbf{Plugins}: Ansible có rất nhiều các thành phần để chúng ta có thể tích hợp thêm những thứ cần thiết.
+          \pause
+          \item \textbf{Playbooks}: là tập hợp những cấu hình cụ thể thực hiện một số các công việc nhất định.
+        \end{itemize}
+      \end{scriptsize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \section{Triển khai thực nghiệm}
@@ -224,61 +233,39 @@
 \subsubsection*{Lựa chọn công cụ}
 \begin{frame}{Lựa chọn công cụ}
 \renewcommand{\baselinestretch}{1.50}\normalsize
-Ansible được chọn vì những lý do sau:
-\begin{itemize}
-\item Ansible rất dễ học và sử dụng.
-\item Ansible được viết bằng Python.
-\item Ansible phù hợp với tư duy của người quản trị hệ thống.
+  Ansible được chọn vì những lý do sau:
+  \begin{itemize}
+    \item Ansible rất dễ học và sử dụng.
+    \pause
+    \item Ansible được viết bằng Python.
+    \pause
+    \item Ansible phù hợp với tư duy của người quản trị hệ thống.
+  \end{itemize}
 \renewcommand{\baselinestretch}{1.0}\normalsize
-\end{itemize}
 \end{frame}
 
 
 \begin{frame}{Phân tích}
 \renewcommand{\baselinestretch}{1.50}\normalsize
-Những công việc cần phải thực hiện:
-\begin{itemize}
-\item Tạo máy chủ ảo trên hệ thống GCE.
-\item Cài đặt và cấu hình LAMP.
-\item Triển khai ứng dụng Wordpress CMS.
-\end{itemize}
+  Những công việc cần phải thực hiện:
+  \begin{itemize}
+    \item Tạo máy chủ ảo trên hệ thống GCE.
+    \pause
+    \item Cài đặt và cấu hình LAMP.
+    \pause
+    \item Triển khai ứng dụng Wordpress CMS.
+  \end{itemize}
 \renewcommand{\baselinestretch}{1.0}\normalsize
 \end{frame}
 
-\subsubsection*{Tạo máy chủ ảo trên hệ thống GCE}
-\begin{frame}{Tạo máy chủ ảo trên hệ thống GCE}
-\begin{center}
-\Large Hệ thống GCE đã được \\
-Ansible hỗ trợ sẵn qua module \href{http://www.ansibleworks.com/docs/modules.html\#gce}{\textbf{\textit{gce}}}
-\end{center}
-\end{frame}
-
-\subsubsection*{Cài đặt và cấu hình LAMP}
-\begin{frame}{Cài đặt và cấu hình LAMP}
-\begin{itemize}
-\item \Large Nginx
-\item \Large MySQL
-\item \Large PHP
-\end{itemize}
-\end{frame}
-
-\subsubsection*{Triển khai ứng dụng Wordpress CMS}
-\begin{frame}{Triển khai ứng dụng Wordpress CMS}
-\begin{itemize}
-\item Download và giải nén mã nguồn.
-\item Tạo người dùng và cơ sở dữ liệu.
-\item Copy file cấu hình.
-\end{itemize}
-\end{frame}
-
 \subsection{Triển khai}
-\begin{frame}{Triển khai viết playbook cho Ansible}
-\begin{itemize}
-\item \href{run:./src/gce-wordpress-nginx/roles/gce/tasks/main.yml}{play gce}
-\item \href{run:./src/gce-wordpress-nginx/roles/mysql/tasks/main.yml}{play mysql}
-\item \href{run:./src/gce-wordpress-nginx/roles/nginx/tasks/main.yml}{play nginx}
-\item \href{run:./src/gce-wordpress-nginx/roles/wordpress/tasks/main.yml}{play wordpress}
-\end{itemize}
+\begin{frame}{Viết các playbook cho Ansible}
+  \begin{itemize}
+  \item playbook gce
+  \item playbook mysql
+  \item playbook nginx
+  \item playbook wordpress
+  \end{itemize}
 \end{frame}
 
 \section{Demo}
@@ -290,15 +277,15 @@ Ansible hỗ trợ sẵn qua module \href{http://www.ansibleworks.com/docs/modul
 
 \section*{}
 \begin{frame}
-\begin{center}
-\Huge Questions?
-\end{center}
+  \begin{center}
+    \Huge Questions?
+  \end{center}
 \end{frame}
 
 \section*{}
 \begin{frame}
     \begin{center}
-        \Huge Cám ơn mọi người đã lắng nghe!
+      \Huge Cám ơn mọi người đã lắng nghe!
     \end{center}
 \end{frame}
 
